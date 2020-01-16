@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="DataStructure"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/rollbear/CLionProjects/DataStructure/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/rollbear/CLionProjects/DataStructure/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="DataStructure">
+				<Option output="/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/DataStructure" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/rollbear/CLionProjects/DataStructure/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/6"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/6"/>
+					<Add directory="/usr/include/c++/6/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 DataStructure"/>
+					<CompileFile command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="DataStructure/fast">
+				<Option output="/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/DataStructure" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/rollbear/CLionProjects/DataStructure/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/6"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/6"/>
+					<Add directory="/usr/include/c++/6/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 DataStructure/fast"/>
+					<CompileFile command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/rollbear/CLionProjects/DataStructure/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/bin/make -j8 -f &quot;/home/rollbear/CLionProjects/DataStructure/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/DsException.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp1/LinearTable.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp1/Menu1.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp10/FormTextBook/BST.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp10/FormTextBook/SortedList.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp10/FormTextBook/dataList.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp10/FormTextBook/searchList.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp10/Menu10.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp10/searchTree.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp10/staticSearch.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp11/FromTextbook/Graph.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp11/FromTextbook/Graphmtx.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp2/List.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp2/Menu2.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp3/CircleList.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp3/DoubleLinkedList.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp3/Menu3.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp4/Menu4.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp4/PolyByArr.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp4/PolyByLinearTable.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp4/PolyByList.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp4/PolyCal.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp5/LinkedStack.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp5/Menu5.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp5/Stack.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp6/LinkedQueue.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp6/Menu6.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp6/PQueue.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp6/Queue.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp7/Menu7.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp7/String.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/BinTree.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/BinTreeByLinearTable.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/BinaryTree.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/Menu8.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/MinHeap.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp9/Menu9.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp9/ThreadedBT.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/Graph.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/HashTable.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/Sort.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/TestSystem.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/UiCollection.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/Homework/Ch.1/1.17.cpp">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/Homework/Ch.2/2.12.cpp">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/Homework/Ch.2/2.17.cpp">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/Homework/Ch.2/2.19.cpp">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/Homework/Ch.3/3.10.cpp">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/Homework/Ch.3/3.15.cpp">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/Homework/Ch.5/5.25.cpp">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/Homework/Ch.5/5.31.cpp">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/SourceFiles/mainMenu.cpp">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/SourceFiles/test.cpp">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
