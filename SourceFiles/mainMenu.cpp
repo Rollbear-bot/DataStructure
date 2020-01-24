@@ -2,7 +2,7 @@
 // Created by 13592 on 2019/11/11.
 // Ö÷²Ëµ¥
 
-#if 1
+#if 0
 #include "../HeaderFiles/TestSystem.h"
 
 int main(){
