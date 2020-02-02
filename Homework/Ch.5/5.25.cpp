@@ -2,7 +2,9 @@
 // Created by 13592 on 2019/11/17.
 // p248 5.25 非递归实现数的前序遍历
 
-#include "../../HeaderFiles/Exp8/BinaryTree.h"
+#if 0
+
+#include "../../HeaderFiles/Exp8/FromTextbook/BinaryTree.h"
 #include "../../HeaderFiles/Exp5/Stack.h"
 
 //消去右递归后的前序遍历算法
@@ -34,3 +36,5 @@ void PreOrderX(BinTreeNode<T> *root){
         if(temp->leftChild != nullptr) st.push(temp->leftChild);
     }
 }
+
+#endif

@@ -7,7 +7,7 @@
 
 #define DefaultSize 10
 
-#include "../Exp6/PQueue.h"
+#include "../../Exp6/PQueue.h"
 #include<iostream>
 using namespace std;
 
@@ -68,7 +68,7 @@ private:
     void siftUp(int start); //从start到0上滑调整成为最小堆
 };
 
-//------------------------类外定义-----------------------------
+//------------------------以下为类外定义-----------------------------
 
 //构造函数：通过一个数组建堆
 template <class T>

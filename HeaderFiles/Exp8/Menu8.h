@@ -5,9 +5,8 @@
 #ifndef DATASTRUCTURE_MENU8_H
 #define DATASTRUCTURE_MENU8_H
 
-#include "MinHeap.h"
-#include "BinaryTree.h"
-#include "BinTree.h"
+#include "FromTextbook/MinHeap.h"
+#include "FromTextbook/BinaryTree.h"
 #include "../Exp2/List.h"
 #include "BinTreeByLinearTable.h"
 #include"..//UiCollection.h"

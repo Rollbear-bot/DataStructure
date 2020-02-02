@@ -1,18 +1,24 @@
 #if 1
 
 #include "../HeaderFiles/TestSystem.h"
-#include "../HeaderFiles/Exp10/FormTextBook/BST.h"
 #include "../HeaderFiles/Others/HashTable.h"
 #include "../HeaderFiles/Exp11/FromTextbook/Graphmtx.h"
 #include "../HeaderFiles/Others/Sort.h"
 #include "../HeaderFiles/Others/Heap.h"
+#include "../HeaderFiles/Exp8/BinTreeByLink.h"
 
 int main(){
     try {
         //测试区
-        int arr[] = {4, 2, 6, 1, 9};
-        Heap<int> hp(arr, 5);
-        hp.printLayerOrder();
+        //string generalizeTable = "A(B(D,E(G,)),C(,F))";
+        //BinTreeByLink<char> bt = BinTreeByLink<char>(generalizeTable, '#');
+
+        //交互式建立
+        BinTreeByLink<char> bt;
+
+        List<char> result;
+        result = bt.preOrderTraversal();
+        result.printList();
 
         return 0;
     }

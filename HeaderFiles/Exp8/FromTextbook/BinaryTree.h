@@ -5,9 +5,9 @@
 #ifndef DATASTRUCTURE_BINARYTREE_H
 #define DATASTRUCTURE_BINARYTREE_H
 
-#include "../Exp5/Stack.h"
-#include "BinTree.h"
+#if 0
 
+#include "../../Exp5/Stack.h"
 #include<iostream>
 using namespace std;
 
@@ -185,7 +185,7 @@ void CreateBinTree(istream &in, BinTreeNode<char> *&BT){
 }
 
 
-
+//自行编写：未完成的模板
 template <class T>
 class BinTree{
 public:
@@ -213,5 +213,6 @@ protected:
 
 //#endif //DATASTRUCTURE_BINTREE_H
 
+#endif
 
 #endif //DATASTRUCTURE_BINARYTREE_H

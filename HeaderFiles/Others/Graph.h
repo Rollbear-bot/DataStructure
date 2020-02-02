@@ -11,11 +11,11 @@
 template <class T, class E>
 struct GraphNode{
 public:
-public:
     GraphNode(E key, T data): key(key), data(data){}
     E key;
     T data;
     //bool visited; //访问标记
+    //todo::是否需要在每个节点中添加“访问标记”字段
 };
 
 //图：邻接表实现
@@ -29,17 +29,17 @@ public:
     //添加结点
     bool addNode(E key, T data){
         List<GraphNode<E, T>> neighborList(0);
-        neighborList.append(GraphNode(key, data));
+        neighborList.append(GraphNode<T, E>(key, data));
         this->nodesList.append(neighborList);
         return true;
     }
 
     //添加边
     bool addEdge(E keyA, E keyB){
-
+        //todo::添加边的算法
     }
 
-    //depth first search
+    //深度优先搜索
     bool DFS(E key){
         List<E> hasVisited(0);
         for(int nodesListIndex: this->nodesList){
@@ -47,7 +47,7 @@ public:
         }
     }
 
-    //breadth first search
+    //广度优先搜索
     T BFS(E key){
         List<E> hasVisited(0);
         for(int nodesListIndex = 0; nodesListIndex < nodesList.getLen(); nodesListIndex++){
@@ -65,8 +65,6 @@ public:
 
 protected:
     List<List<GraphNode<T, E>>> nodesList; //顶点表
-
-
 };
 
 #endif //DATASTRUCTURE_GRAPH_H

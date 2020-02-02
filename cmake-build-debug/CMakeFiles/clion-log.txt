@@ -1,18 +1,4 @@
 /home/rollbear/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/193.5662.56/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/bin/make -DCMAKE_C_COMPILER=/bin/gcc -DCMAKE_CXX_COMPILER=/bin/c++ -G "CodeBlocks - Unix Makefiles" /home/rollbear/CLionProjects/DataStructure
--- The C compiler identification is GNU 6.3.0
--- The CXX compiler identification is GNU 6.3.0
--- Check for working C compiler: /bin/gcc
--- Check for working C compiler: /bin/gcc -- works
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Detecting C compile features
--- Detecting C compile features - done
--- Check for working CXX compiler: /bin/c++
--- Check for working CXX compiler: /bin/c++ -- works
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Detecting CXX compile features
--- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/rollbear/CLionProjects/DataStructure/cmake-build-debug
