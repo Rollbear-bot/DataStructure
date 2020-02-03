@@ -93,18 +93,6 @@
 		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp1/Menu1.h">
 			<Option target="DataStructure"/>
 		</Unit>
-		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp10/FromTextBook/BST.h">
-			<Option target="DataStructure"/>
-		</Unit>
-		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp10/FromTextBook/SortedList.h">
-			<Option target="DataStructure"/>
-		</Unit>
-		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp10/FromTextBook/dataList.h">
-			<Option target="DataStructure"/>
-		</Unit>
-		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp10/FromTextBook/searchList.h">
-			<Option target="DataStructure"/>
-		</Unit>
 		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp10/Menu10.h">
 			<Option target="DataStructure"/>
 		</Unit>
@@ -112,12 +100,6 @@
 			<Option target="DataStructure"/>
 		</Unit>
 		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp10/staticSearch.h">
-			<Option target="DataStructure"/>
-		</Unit>
-		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp11/FromTextbook/Graph.h">
-			<Option target="DataStructure"/>
-		</Unit>
-		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp11/FromTextbook/Graphmtx.h">
 			<Option target="DataStructure"/>
 		</Unit>
 		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp2/List.h">
@@ -183,12 +165,6 @@
 		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/BinTreeByLink.h">
 			<Option target="DataStructure"/>
 		</Unit>
-		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/FromTextbook/BinaryTree.h">
-			<Option target="DataStructure"/>
-		</Unit>
-		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/FromTextbook/MinHeap.h">
-			<Option target="DataStructure"/>
-		</Unit>
 		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/Menu8.h">
 			<Option target="DataStructure"/>
 		</Unit>
@@ -196,6 +172,30 @@
 			<Option target="DataStructure"/>
 		</Unit>
 		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp9/ThreadedBT.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/BST.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/BinaryTree.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/Graph.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/Graphmtx.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/MinHeap.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/SortedList.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/dataList.h">
+			<Option target="DataStructure"/>
+		</Unit>
+		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/searchList.h">
 			<Option target="DataStructure"/>
 		</Unit>
 		<Unit filename="/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/Graph.h">

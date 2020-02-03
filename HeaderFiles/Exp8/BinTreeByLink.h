@@ -1,4 +1,4 @@
-// 二叉树：链接实现
+// 二叉树：链接实现（三叉链表）
 // Created by rollbear on 2020/2/2.
 /*
  * 实验要求：
@@ -54,7 +54,51 @@ public:
         this->root = BuildInteractive();
     }
 
+    //拷贝构造函数
+    BinTreeByLink(const BinTreeByLink<T> &another){
+        this->nullValue = another.nullValue;
+        //todo::拷贝构造函数
+    }
+
 public:
+    //根据节点的层次序序号，返回该节点（序号从１开始）
+    BinTreeNode<T> *getNode(int index){
+
+    }
+
+    //前序遍历递归的封装：返回一个链表形式的遍历结果
+    List<T> preOrderTraversal(){
+        List<T> result(0);
+        preOrderRecursion(root, result);
+        return result;
+    }
+
+    //中序遍历递归的封装：返回链表
+    List<T> inOrderTraversal(){
+        List<T> result(0);
+        inOrderRecursion(root, result);
+        return result;
+    }
+
+    //后序遍历递归的封装：返回链表
+    List<T> postOrderTraversal(){
+        List<T> result(0);
+        postOrderRecursion(root, result);
+        return result;
+    }
+
+    //非递归前序遍历
+    List<T> preOrderTraversalWithoutRecursion(){
+        List<T> result(0);
+        Stack<T> stack(0);
+    }
+
+
+protected:
+    BinTreeNode<T> *root; //根节点
+    T nullValue; //代表空位置的值
+
+
     /*
      * 从广义表构造二叉树，返回该二叉树的根节点
      * 具体步骤：
@@ -79,7 +123,7 @@ public:
                 case '(':
                     //新建一个数据值为空的孩子节点，并将指针移到那里
                     currentNode->leftChild = new BinTreeNode<T>(nullValue,
-                            nullptr, nullptr, currentNode);
+                                                                nullptr, nullptr, currentNode);
                     currentNode = currentNode->leftChild;
                     break;
                 case ')':
@@ -91,7 +135,7 @@ public:
                     //创建兄弟节点并将指针移动到那里
                     if(currentNode->parent == nullptr) throw NullPointer();
                     currentNode->parent->rightChild = new BinTreeNode<T>(nullValue,
-                            nullptr, nullptr, currentNode->parent);
+                                                                         nullptr, nullptr, currentNode->parent);
                     currentNode = currentNode->parent->rightChild;
                     break;
                 default:
@@ -149,23 +193,6 @@ public:
         return r;
     }
 
-    //根据节点的层次序序号，返回该节点（序号从１开始）
-    BinTreeNode<T> *getNode(int index){
-
-    }
-
-    //前序遍历递归的封装：返回一个链表形式的遍历结果
-    List<T> preOrderTraversal(){
-        List<T> result(0);
-        preOrderRecursion(root, result);
-        return result;
-    }
-
-
-protected:
-    BinTreeNode<T> *root; //根节点
-    T nullValue; //代表空位置的值
-
     //递归前序遍历
     void preOrderRecursion(BinTreeNode<T> *currentNode, List<T> &result){
         if(currentNode == nullptr || currentNode->value == nullValue)
@@ -173,6 +200,24 @@ protected:
         result.append(currentNode->value); //将当前节点的数据值附加到结果链表
         preOrderRecursion(currentNode->leftChild, result); //访问左孩子
         preOrderRecursion(currentNode->rightChild, result); //访问右孩子
+    }
+
+    //递归中序遍历
+    void inOrderRecursion(BinTreeNode<T> *currentNode, List<T> &result){
+        if(currentNode == nullptr || currentNode->value == nullValue)
+            return; //递归出口
+        inOrderRecursion(currentNode->leftChild, result); //访问左孩子
+        result.append(currentNode->value); //访问根节点
+        inOrderRecursion(currentNode->rightChild, result); //访问右孩子
+    }
+
+    //递归后序遍历
+    void postOrderRecursion(BinTreeNode<T> *currentNode, List<T> &result){
+        if(currentNode == nullptr || currentNode->value == nullValue)
+            return; //递归出口
+        postOrderRecursion(currentNode->leftChild, result); //访问左孩子
+        postOrderRecursion(currentNode->rightChild, result); //访问右孩子
+        result.append(currentNode->value); //访问根节点
     }
 };
 
