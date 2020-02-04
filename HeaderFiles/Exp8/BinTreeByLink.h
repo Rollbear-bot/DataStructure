@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include "../Exp2/List.h"
+#include <cmath>
 using namespace std;
 
 //二叉树节点的定义
@@ -47,16 +48,21 @@ public:
     BinTreeByLink(const string& gt, T nullValue){
         this->nullValue = nullValue;
         this->root = BuildByGeneralizedTable(gt);
+        refresh(root); //标准化
     }
 
     //构造函数：交互式建立
     BinTreeByLink(){
         this->root = BuildInteractive();
+        refresh(root); //标准化
     }
 
     //拷贝构造函数
     BinTreeByLink(const BinTreeByLink<T> &another){
         this->nullValue = another.nullValue;
+        this->root = new BinTreeNode<T>(another.root->value);
+        BinTreeNode<T> *p = root;
+
         //todo::拷贝构造函数
     }
 
@@ -79,12 +85,19 @@ public:
     //根据层次序序号获取某个位置的节点的数据值
     //序号从1开始（根节点的序号是1）
     T getNodeValue(int index){
-        return getNode(index)->value;
+        BinTreeNode<T> *currentNode = getNode(index);
+        return currentNode == nullptr? nullValue: currentNode->value;
     }
 
     //根据层次序序号删除某个节点和它的所有子节点，序号从1开始
     void removeByIndex(int index){
         remove(getNode(index));
+    }
+
+    //为某个节点添加子节点，若该位置已存在节点则失败，返回false
+    //根据层次序序号来选择父节点（根节点的序号是1）
+    bool append(int index, T value, bool leftAppend){
+        return append(getNode(index), value, leftAppend);
     }
 
     //前序遍历递归的封装：返回一个链表形式的遍历结果
@@ -110,7 +123,7 @@ public:
 
     //非递归层次序遍历：使用队列
     List<T> layerTraversalWithoutRecursion(){
-        Queue<BinTreeNode<T>*> queue(numOfNodes()); //建立队列
+        Queue<BinTreeNode<T>*> queue(pow(2, height()) - 1); //建立队列
         List<T> result;
         BinTreeNode<T> *currentNode;
 
@@ -121,13 +134,14 @@ public:
         while(!queue.isEmpty()){
             currentNode = queue.quit();
             result.append(currentNode->value);
+            if(result.getLen() >= (pow(2, height()) - 1)) break;
 
-            //todo::空白位置也要记录，否则不能体现出层次关系
+            //空白位置也要记录，否则不能体现出层次关系
             if(currentNode->leftChild == nullptr)
-                result.append(nullValue);
+                queue.enter(new BinTreeNode<T>(nullValue, nullptr, nullptr, currentNode));
             else queue.enter(currentNode->leftChild);
             if(currentNode->rightChild == nullptr)
-                result.append(nullValue);
+                queue.enter(new BinTreeNode<T>(nullValue, nullptr, nullptr, currentNode));
             else queue.enter(currentNode->rightChild);
         }//end while
 
@@ -345,19 +359,21 @@ protected:
 
     //判断某个节点是否是叶子节点（无子节点）
     bool isLeaf(BinTreeNode<T> *node){
-        return (node->leftChild == nullptr || node->leftChild->value == nullValue)
-               && (node->rightChild == nullptr || node->rightChild->value == nullValue);
+        return  node->leftChild == nullptr
+            && node->rightChild == nullptr;
     }
 
     //递归实现计算树高
     int heightCountRecursion(BinTreeNode<T> *currentNode, int h){
         if(isLeaf(currentNode)) { return h; } //递归出口
 
-        int leftValue, rightValue;
+        int leftValue = 0, rightValue = 0;
         h++;
         //保留长的那个分支的长度，因为树高取决于最长的分支
-        leftValue = heightCountRecursion(currentNode->leftChild, h);
-        rightValue = heightCountRecursion(currentNode->rightChild, h);
+        if(currentNode->leftChild != nullptr)
+            leftValue = heightCountRecursion(currentNode->leftChild, h);
+        if(currentNode->rightChild != nullptr)
+            rightValue = heightCountRecursion(currentNode->rightChild, h);
         return (leftValue > rightValue)? leftValue: rightValue;
     }
 
@@ -369,7 +385,6 @@ protected:
         //如果右孩子存在，删除右孩子
         if(node->rightChild != nullptr && node->rightChild->value != nullValue)
             remove(node->rightChild);
-
         //删除自己
         BinTreeNode<T> *tmp = node;
         bool nodeIsTheLeft;
@@ -382,6 +397,33 @@ protected:
         }
         delete node; //释放空间
     }
+
+    //删除所有无用节点（即值为nullValue的节点）
+    void refresh(BinTreeNode<T> *currentNode){
+        if(currentNode == nullptr)
+            return;
+        if(currentNode->value == nullValue){
+            remove(currentNode); //去除值为nullValue的节点
+            return;
+        }
+        refresh(currentNode->leftChild);
+        refresh(currentNode->rightChild);
+    }
+
+    //为指定的节点添加子节点，失败则返回false
+    bool append(BinTreeNode<T> *currentNode, T value, bool leftAppend){
+        if(leftAppend){
+            if(currentNode->leftChild != nullptr) return false;
+            currentNode->leftChild =
+                    new BinTreeNode<T>(value, nullptr, nullptr, currentNode);
+        } else {
+            if(currentNode->rightChild != nullptr) return false;
+            currentNode->rightChild =
+                    new BinTreeNode<T>(value, nullptr, nullptr, currentNode);
+        }
+        return true;
+    }
+
 };
 
 #endif //DATASTRUCTURE_BINTREEBYLINK_H
