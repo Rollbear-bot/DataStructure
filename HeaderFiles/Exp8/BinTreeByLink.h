@@ -61,29 +61,20 @@ public:
     }
 
 public:
-    //根据节点的层次序序号，返回该节点（根节点的序号为1）
-    BinTreeNode<T> *getNode(int index){
-        //用一个栈来存储从根节点到目标节点的路径，
-        //布尔量表示在某个节点是前往左孩子还是右孩子
-        Stack<bool> goLeft(20);
-        do {
-            if(index % 2 ==0) {
-                goLeft.push(true);
-                index /= 2;
-            }
-            else {
-                goLeft.push(false);
-                index = (index-1) / 2;
-            }
-        } while(index > 1);
+    //计算树高：递归实现的封装
+    int height(){
+        return heightCountRecursion(root, 1);
+    }
 
-        //栈构造完毕，开始访问
-        BinTreeNode<T> *visitor = this->root;
-        while(!goLeft.isEmpty()){
-            if(goLeft.pop()) visitor = visitor->leftChild;
-            else visitor = visitor->rightChild;
-        }
-        return visitor;
+    //计算节点个数
+    int numOfNodes(){
+        return preOrderTraversalWithoutRecursion().getLen();
+    }
+
+    //根据层次序序号获取某个位置的节点的数据值
+    //序号从1开始（根节点的序号是1）
+    T getNodeValue(int index){
+        return getNode(index)->value;
     }
 
     //前序遍历递归的封装：返回一个链表形式的遍历结果
@@ -104,6 +95,28 @@ public:
     List<T> postOrderTraversal(){
         List<T> result(0);
         postOrderRecursion(root, result);
+        return result;
+    }
+
+    //非递归层次序遍历：使用队列
+    List<T> layerTraversalWithoutRecursion(){
+        Queue<BinTreeNode<T>*> queue(numOfNodes()); //建立队列
+        List<T> result;
+        BinTreeNode<T> *currentNode;
+
+        //首先根节点入队
+        queue.enter(root);
+        //每个节点从队头离开时，访问它，并将它的左右子节点依次从队尾入队，
+        //直到队列空
+        while(!queue.isEmpty()){
+            currentNode = queue.quit();
+            result.append(currentNode->value);
+            if(currentNode->leftChild != nullptr && currentNode->leftChild->value != nullValue)
+                queue.enter(currentNode->leftChild);
+            if(currentNode->rightChild != nullptr && currentNode->rightChild->value != nullValue)
+                queue.enter(currentNode->rightChild);
+        }//end while
+
         return result;
     }
 
@@ -280,6 +293,58 @@ protected:
         postOrderRecursion(currentNode->leftChild, result); //访问左孩子
         postOrderRecursion(currentNode->rightChild, result); //访问右孩子
         result.append(currentNode->value); //访问根节点
+    }
+
+    //根据节点的层次序序号，返回该节点（根节点的序号为1）
+    //若不存在该序号的节点，返回空指针
+    BinTreeNode<T> *getNode(int index){
+        //用一个栈来存储从根节点到目标节点的路径，
+        //布尔量表示在某个节点是前往左孩子还是右孩子
+        Stack<bool> goLeft(20);
+        do {
+            if(index % 2 ==0) {
+                goLeft.push(true);
+                index /= 2;
+            }
+            else {
+                goLeft.push(false);
+                index = (index-1) / 2;
+            }
+        } while(index > 1);
+
+        //栈构造完毕，开始访问
+        BinTreeNode<T> *visitor = this->root;
+        while(!goLeft.isEmpty()){
+            if(goLeft.pop()) {
+                if(visitor->leftChild == nullptr || visitor->leftChild->value == nullValue)
+                    return nullptr;
+                visitor = visitor->leftChild;
+            }
+            else {
+                if(visitor->rightChild == nullptr || visitor->rightChild->value == nullValue)
+                    return nullptr;
+                visitor = visitor->rightChild;
+            }
+        }
+        return visitor;
+    }
+
+    //判断某个节点是否是叶子节点（无子节点）
+    bool isLeaf(BinTreeNode<T> *node){
+        return (node->leftChild == nullptr || node->leftChild->value == nullValue)
+               && (node->rightChild == nullptr || node->rightChild->value == nullValue);
+    }
+
+    //递归实现计算树高
+    int heightCountRecursion(BinTreeNode<T> *currentNode, int h){
+        if(isLeaf(currentNode)) { return h; } //递归出口
+
+        int leftValue, rightValue;
+        h++;
+        //保留长的那个分支的长度，因为树高取决于最长的分支
+        leftValue = heightCountRecursion(currentNode->leftChild, h);
+        rightValue = heightCountRecursion(currentNode->rightChild, h);
+        return (leftValue > rightValue)? leftValue: rightValue;
     }
 };
 
