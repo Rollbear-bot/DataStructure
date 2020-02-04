@@ -60,6 +60,11 @@ public:
         //todo::拷贝构造函数
     }
 
+    //析构函数
+    ~BinTreeByLink(){
+        remove(root);
+    }
+
 public:
     //计算树高：递归实现的封装
     int height(){
@@ -75,6 +80,11 @@ public:
     //序号从1开始（根节点的序号是1）
     T getNodeValue(int index){
         return getNode(index)->value;
+    }
+
+    //根据层次序序号删除某个节点和它的所有子节点，序号从1开始
+    void removeByIndex(int index){
+        remove(getNode(index));
     }
 
     //前序遍历递归的封装：返回一个链表形式的遍历结果
@@ -111,10 +121,14 @@ public:
         while(!queue.isEmpty()){
             currentNode = queue.quit();
             result.append(currentNode->value);
-            if(currentNode->leftChild != nullptr && currentNode->leftChild->value != nullValue)
-                queue.enter(currentNode->leftChild);
-            if(currentNode->rightChild != nullptr && currentNode->rightChild->value != nullValue)
-                queue.enter(currentNode->rightChild);
+
+            //todo::空白位置也要记录，否则不能体现出层次关系
+            if(currentNode->leftChild == nullptr)
+                result.append(nullValue);
+            else queue.enter(currentNode->leftChild);
+            if(currentNode->rightChild == nullptr)
+                result.append(nullValue);
+            else queue.enter(currentNode->rightChild);
         }//end while
 
         return result;
@@ -345,6 +359,28 @@ protected:
         leftValue = heightCountRecursion(currentNode->leftChild, h);
         rightValue = heightCountRecursion(currentNode->rightChild, h);
         return (leftValue > rightValue)? leftValue: rightValue;
+    }
+
+    //删除某个节点以及它的所有子节点
+    void remove(BinTreeNode<T> *node){
+        //如果左孩子存在，删除左孩子
+        if(node->leftChild != nullptr && node->leftChild->value != nullValue)
+            remove(node->leftChild);
+        //如果右孩子存在，删除右孩子
+        if(node->rightChild != nullptr && node->rightChild->value != nullValue)
+            remove(node->rightChild);
+
+        //删除自己
+        BinTreeNode<T> *tmp = node;
+        bool nodeIsTheLeft;
+        if(node != root){
+            //判断目标节点是父节点的左孩子还是右孩子
+            nodeIsTheLeft = (node == node->parent->leftChild);
+            //清除指向垃圾空间的指针
+            if(nodeIsTheLeft) node->parent->leftChild = nullptr;
+            else node->parent->rightChild = nullptr;
+        }
+        delete node; //释放空间
     }
 };
 
