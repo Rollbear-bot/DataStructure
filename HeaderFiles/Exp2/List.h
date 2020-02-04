@@ -24,11 +24,8 @@ struct ListNode{
 template <class T>
 class List{
 public:
-    //无参的构造函数
-    List(){List(0);}
-
     //在构造函数中建表
-    List(int len){
+    List(int len = 0){
         this->len = len;
         if(!len){
             //first指向附加头节点
