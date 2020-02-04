@@ -61,9 +61,29 @@ public:
     }
 
 public:
-    //根据节点的层次序序号，返回该节点（序号从１开始）
+    //根据节点的层次序序号，返回该节点（根节点的序号为1）
     BinTreeNode<T> *getNode(int index){
+        //用一个栈来存储从根节点到目标节点的路径，
+        //布尔量表示在某个节点是前往左孩子还是右孩子
+        Stack<bool> goLeft(20);
+        do {
+            if(index % 2 ==0) {
+                goLeft.push(true);
+                index /= 2;
+            }
+            else {
+                goLeft.push(false);
+                index = (index-1) / 2;
+            }
+        } while(index > 1);
 
+        //栈构造完毕，开始访问
+        BinTreeNode<T> *visitor = this->root;
+        while(!goLeft.isEmpty()){
+            if(goLeft.pop()) visitor = visitor->leftChild;
+            else visitor = visitor->rightChild;
+        }
+        return visitor;
     }
 
     //前序遍历递归的封装：返回一个链表形式的遍历结果
@@ -90,7 +110,22 @@ public:
     //非递归前序遍历
     List<T> preOrderTraversalWithoutRecursion(){
         List<T> result(0);
-        Stack<T> stack(0);
+        Stack<BinTreeNode<T>*> stack(20);
+        BinTreeNode<T> *currentNode;
+        stack.push(root); //首先将根节点入栈
+
+        //每次栈顶节点出栈时访问它，然后它的右、左子女依次入栈
+        while(!stack.isEmpty()){
+            currentNode = stack.pop();
+            if(currentNode->value != nullValue)
+                result.append(currentNode->value); //访问
+            if(currentNode->rightChild != nullptr && currentNode->rightChild->value != nullValue)
+                stack.push(currentNode->rightChild);
+            if(currentNode->leftChild != nullptr && currentNode->leftChild->value != nullValue)
+                stack.push(currentNode->leftChild);
+        } //end while
+
+        return result;
     }
 
 
@@ -121,9 +156,12 @@ protected:
             if(!currentChar) break;
             switch (currentChar){
                 case '(':
-                    //新建一个数据值为空的孩子节点，并将指针移到那里
-                    currentNode->leftChild = new BinTreeNode<T>(nullValue,
-                                                                nullptr, nullptr, currentNode);
+                    //检测左孩子是否已经存在
+                    if(currentNode->leftChild != nullptr &&
+                        currentNode->leftChild->value != nullValue) throw Ex("不合理的广义表！");
+                    //新建一个数据值为空的左孩子节点，并将指针移到那里
+                    currentNode->leftChild =
+                            new BinTreeNode<T>(nullValue, nullptr, nullptr, currentNode);
                     currentNode = currentNode->leftChild;
                     break;
                 case ')':
@@ -132,14 +170,21 @@ protected:
                     currentNode = currentNode->parent;
                     break;
                 case ',':
+                    //检测兄弟节点是否已经存在
+                    if(currentNode->parent->rightChild != nullptr &&
+                         currentNode->parent->rightChild->value != nullValue) throw Ex("不合理的广义表！");
                     //创建兄弟节点并将指针移动到那里
                     if(currentNode->parent == nullptr) throw NullPointer();
-                    currentNode->parent->rightChild = new BinTreeNode<T>(nullValue,
-                                                                         nullptr, nullptr, currentNode->parent);
+                    currentNode->parent->rightChild =
+                            new BinTreeNode<T>(nullValue, nullptr, nullptr, currentNode->parent);
                     currentNode = currentNode->parent->rightChild;
                     break;
                 default:
+                    //检测该节点是否已经存在数据值
+                    if(currentNode->value != nullValue) throw Ex("不合理的广义表！");
+                    //为该节点添加数据
                     currentNode->value = T(currentChar);
+                    break;
             } //end switch
         } while(currentChar != '\0');
         return r;
@@ -150,11 +195,12 @@ protected:
      * 要求用户从键盘输入各类数据
      * 函数返回该二叉树的根节点
      * todo::输入无效指令时应该提示，并要求重新输入
-     * todo::新建节点的位置已经存在节点是应该提示
+     * todo::节点覆盖时出错
      */
     BinTreeNode<T> *BuildInteractive(){
         int choice = 1;
         T value;
+        string exceptionInfo = "该节点已存在：";
 
         cout << "开始交互式建立二叉树" << endl;
         cout << "请输入代表空位置的数据值：" << endl;
@@ -171,24 +217,40 @@ protected:
             cout << "当前节点：" << p->value << endl;
             cout << "1:建立左孩子 2:建立右孩子 3:返回父节点 0:结束" << endl;
             cin >> choice;
-            switch (choice){
-                case 1:
-                    cout << "请输入节点的值：" << endl;
-                    cin >> value;
-                    p->leftChild = new BinTreeNode<T>(T(value), nullptr, nullptr, p);
-                    p = p->leftChild;
-                    break;
-                case 2:
-                    cout << "请输入节点的值：" << endl;
-                    cin >> value;
-                    p->rightChild = new BinTreeNode<T>(T(value), nullptr, nullptr, p);
-                    p = p->rightChild;
-                    break;
-                case 3:
-                    p = p->parent;
-                    cout << "指针已返回到父节点" << endl;
-                    break;
-            } //end switch
+            try{
+                switch (choice){
+                    case 1:
+                        if(p->leftChild != nullptr && p->leftChild->value != nullValue){
+                            p = p->leftChild;
+                            throw Ex(exceptionInfo.append(&(p->leftChild->value)));
+                        }
+                        cout << "请输入节点的值：" << endl;
+                        cin >> value;
+                        p->leftChild = new BinTreeNode<T>(T(value), nullptr, nullptr, p);
+                        p = p->leftChild;
+                        break;
+                    case 2:
+                        if(p->rightChild != nullptr && p->rightChild->value != nullValue){
+                            p = p->rightChild;
+                            throw Ex(exceptionInfo.append(&(p->rightChild->value)));
+                        }
+                        cout << "请输入节点的值：" << endl;
+                        cin >> value;
+                        p->rightChild = new BinTreeNode<T>(T(value), nullptr, nullptr, p);
+                        p = p->rightChild;
+                        break;
+                    case 3:
+                        p = p->parent;
+                        cout << "指针已返回到父节点" << endl;
+                        break;
+                } //end switch
+            }
+            catch (Ex e){
+                e.printInfo();
+                cout << "输入该位置的新值：" << endl;
+                cin >> value;
+                p->value = value;
+            }
         } //end while
         return r;
     }
