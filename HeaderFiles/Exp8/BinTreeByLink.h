@@ -6,7 +6,7 @@
 (1)先建立结点,再建立树;
 (2)通过广义表(或各种遍历)以输入流或文件流建立;
 (3)交互式建立。
-2、基本操作函数:构造函数、析构函数、复制构造函数、赋值运算等,以及二叉树的复制
+2、基本操作函数:构造函数、析构函数、复制构造函数、赋值运算等，以及二叉树的复制
 和删除基本操作。
 2、输出二叉树
 3、二叉树的先序、中序、后序遍历和按层遍历(递归和非递归)
@@ -22,6 +22,7 @@
 #include <iostream>
 #include "../Exp2/List.h"
 #include <cmath>
+#include <string>
 using namespace std;
 
 //二叉树节点的定义
@@ -51,11 +52,13 @@ public:
         refresh(root); //标准化
     }
 
+
     //构造函数：交互式建立
     BinTreeByLink(){
         this->root = BuildInteractive();
         refresh(root); //标准化
     }
+
 
     //拷贝构造函数
     BinTreeByLink(BinTreeByLink<T> &another){
@@ -88,6 +91,7 @@ public:
         refresh(root);
     }
 
+
     //析构函数
     ~BinTreeByLink(){
         remove(root);
@@ -99,10 +103,38 @@ public:
         return heightCountRecursion(root, 1);
     }
 
+
+    //计算叶子节点的个数：递归实现的封装
+    int numOfLeaves(){
+        return leavesNumCountRecursion(root);
+    }
+
+
     //计算节点个数
     int numOfNodes(){
         return preOrderTraversalWithoutRecursion().getLen();
     }
+
+
+    //寻找从根节点到指定节点的路径，返回字符串格式的路径
+    string printPathFromRoot(int index){
+        Stack<bool> goLeft = pathFromRoot(index);
+        //todo::需要设计从T类型到char类型的转化方法
+        string path;
+        path += (this->root->value);
+        bool turnLeft;
+        BinTreeNode<T> *tra = this->root;
+        //解析布尔栈
+        while(!goLeft.isEmpty()){
+            turnLeft = goLeft.pop();
+            if(turnLeft) tra = tra->leftChild;
+            else tra = tra->rightChild;
+            path += " -> ";
+            path += (tra->value);
+        }
+        return path;
+    }
+
 
     //根据层次序序号获取某个位置的节点的数据值
     //序号从1开始（根节点的序号是1）
@@ -111,16 +143,19 @@ public:
         return currentNode == nullptr? nullValue: currentNode->value;
     }
 
+
     //根据层次序序号删除某个节点和它的所有子节点，序号从1开始
     void removeByIndex(int index){
         remove(getNode(index));
     }
+
 
     //为某个节点添加子节点，若该位置已存在节点则失败，返回false
     //根据层次序序号来选择父节点（根节点的序号是1）
     bool append(int index, T value, bool leftAppend){
         return append(getNode(index), value, leftAppend);
     }
+
 
     //前序遍历递归的封装：返回一个链表形式的遍历结果
     List<T> preOrderTraversal(){
@@ -129,6 +164,7 @@ public:
         return result;
     }
 
+
     //中序遍历递归的封装：返回链表
     List<T> inOrderTraversal(){
         List<T> result(0);
@@ -136,12 +172,14 @@ public:
         return result;
     }
 
+
     //后序遍历递归的封装：返回链表
     List<T> postOrderTraversal(){
         List<T> result(0);
         postOrderRecursion(root, result);
         return result;
     }
+
 
     //非递归层次序遍历：使用队列
     List<T> layerTraversalWithoutRecursion(){
@@ -169,6 +207,7 @@ public:
 
         return result;
     }
+
 
     //非递归前序遍历
     List<T> preOrderTraversalWithoutRecursion(){
@@ -253,6 +292,7 @@ protected:
         return r;
     }
 
+
     /*
      * 交互式建立二叉树
      * 要求用户从键盘输入各类数据
@@ -318,6 +358,7 @@ protected:
         return r;
     }
 
+
     //递归前序遍历
     void preOrderRecursion(BinTreeNode<T> *currentNode, List<T> &result){
         if(currentNode == nullptr || currentNode->value == nullValue)
@@ -326,6 +367,7 @@ protected:
         preOrderRecursion(currentNode->leftChild, result); //访问左孩子
         preOrderRecursion(currentNode->rightChild, result); //访问右孩子
     }
+
 
     //递归中序遍历
     void inOrderRecursion(BinTreeNode<T> *currentNode, List<T> &result){
@@ -336,6 +378,7 @@ protected:
         inOrderRecursion(currentNode->rightChild, result); //访问右孩子
     }
 
+
     //递归后序遍历
     void postOrderRecursion(BinTreeNode<T> *currentNode, List<T> &result){
         if(currentNode == nullptr || currentNode->value == nullValue)
@@ -345,14 +388,14 @@ protected:
         result.append(currentNode->value); //访问根节点
     }
 
-    //根据节点的层次序序号，返回该节点（根节点的序号为1）
-    //若不存在该序号的节点，返回空指针
-    BinTreeNode<T> *getNode(int index){
+
+    //寻找从根到指定节点的路径，使用一个布尔栈来实现
+    Stack<bool> pathFromRoot(int index){
         //用一个栈来存储从根节点到目标节点的路径，
         //布尔量表示在某个节点是前往左孩子还是右孩子
-        Stack<bool> goLeft(20);
+        Stack<bool> goLeft(numOfNodes());
         do {
-            if(index % 2 ==0) {
+            if(index % 2 == 0) {
                 goLeft.push(true);
                 index /= 2;
             }
@@ -361,6 +404,14 @@ protected:
                 index = (index-1) / 2;
             }
         } while(index > 1);
+        return goLeft;
+    }
+
+
+    //根据节点的层次序序号，返回该节点（根节点的序号为1）
+    //若不存在该序号的节点，返回空指针
+    BinTreeNode<T> *getNode(int index){
+        Stack<T> goLeft = pathFromRoot(index);
 
         //栈构造完毕，开始访问
         BinTreeNode<T> *visitor = this->root;
@@ -379,11 +430,13 @@ protected:
         return visitor;
     }
 
+
     //判断某个节点是否是叶子节点（无子节点）
     bool isLeaf(BinTreeNode<T> *node){
         return  node->leftChild == nullptr
             && node->rightChild == nullptr;
     }
+
 
     //递归实现计算树高
     int heightCountRecursion(BinTreeNode<T> *currentNode, int h){
@@ -398,6 +451,18 @@ protected:
             rightValue = heightCountRecursion(currentNode->rightChild, h);
         return (leftValue > rightValue)? leftValue: rightValue;
     }
+
+
+    //递归计算叶子节点的数量
+    int leavesNumCountRecursion(BinTreeNode<T> *currentNode){
+        if(isLeaf(currentNode)) return 1; //到达叶子，递归出口
+        int leftNum = (currentNode->leftChild == nullptr)?
+                0: leavesNumCountRecursion(currentNode->leftChild);
+        int rightNum = (currentNode->rightChild == nullptr)?
+                0: leavesNumCountRecursion(currentNode->rightChild);
+        return leftNum + rightNum;
+    }
+
 
     //删除某个节点以及它的所有子节点
     void remove(BinTreeNode<T> *node){
@@ -420,6 +485,7 @@ protected:
         delete node; //释放空间
     }
 
+
     //删除所有无用节点（即值为nullValue的节点）
     void refresh(BinTreeNode<T> *currentNode){
         if(currentNode == nullptr)
@@ -431,6 +497,7 @@ protected:
         refresh(currentNode->leftChild);
         refresh(currentNode->rightChild);
     }
+
 
     //为指定的节点添加子节点，失败则返回false
     bool append(BinTreeNode<T> *currentNode, T value, bool leftAppend){
