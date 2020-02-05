@@ -21,6 +21,11 @@ public:
         this->data = temp;
     }
 
+    //拷贝构造函数
+    Stack(const Stack<T> &another){
+        this->data = another.data;
+    }
+
 public:
     //出栈
     T pop(){
