@@ -58,12 +58,34 @@ public:
     }
 
     //拷贝构造函数
-    BinTreeByLink(const BinTreeByLink<T> &another){
+    BinTreeByLink(BinTreeByLink<T> &another){
         this->nullValue = another.nullValue;
         this->root = new BinTreeNode<T>(another.root->value);
-        BinTreeNode<T> *p = root;
+        BinTreeNode<T> *p = root, *currentNode;
+        //获取拷贝目标的层次序遍历结果
+        List<T> temp;
+        temp = another.layerTraversalWithoutRecursion();
+        List<T> layerList(temp);
+        int listIndex = 0; //根节点的数据已经初始化了，从第二个节点开始
 
-        //todo::拷贝构造函数
+        //通过层次序遍历结果来构造
+        Queue<BinTreeNode<T>*> queue(pow(2, another.height())-1); //建立队列
+        queue.enter(this->root);
+        while(listIndex < layerList.getLen()){
+            currentNode = queue.quit();
+            currentNode->leftChild =
+                    new BinTreeNode<T>(layerList.getEle(++listIndex), nullptr, nullptr,
+                            currentNode);
+            if(listIndex >= layerList.getLen()) break;
+
+            currentNode->rightChild =
+                    new BinTreeNode<T>(layerList.getEle(++listIndex), nullptr, nullptr,
+                            currentNode);
+            queue.enter(currentNode->leftChild);
+            queue.enter(currentNode->rightChild);
+        }//end while
+        //删除多余节点
+        refresh(root);
     }
 
     //析构函数
