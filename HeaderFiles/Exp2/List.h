@@ -24,6 +24,22 @@ struct ListNode{
 template <class T>
 class List{
 public:
+    //赋值运算符重载
+    List<T> operator =(const List<T> &operand){
+        this->len = operand.len;
+        this->first = new ListNode<T>;
+        ListNode<T> *flag = first;
+        //复制表中的值
+        for(int index = 0; index < len; index++){
+            flag->next = new ListNode<T>;
+            flag = flag->next;
+            flag->data = operand.find(index)->data;
+        }
+        flag->next = new ListNode<T>;
+        flag = flag->next;
+        this->last = flag;
+    }
+
     //在构造函数中建表
     List(int len = 0){
         this->len = len;
@@ -79,7 +95,7 @@ public:
     }
 
     //定义拷贝构造函数方便复用
-    List(List<T> &another){
+    List(const List<T> &&another){
         this->len = another.len;
         this->first = new ListNode<T>;
         ListNode<T> *flag = first;
@@ -127,7 +143,7 @@ public:
     }
 
     //根据下标返回指向该节点的指针
-    ListNode<T> *find(int index){
+    ListNode<T> *find(int index) const {
         //链表未初始化，不能查找
         if(first==nullptr)throw NullPointer();
         if(index > len || index < 0)throw IndexOutException();
@@ -236,13 +252,13 @@ public:
     }
 
     //获取某个索引位置的元素的值
-    T getEle(int index){
+    T getEle(int index) const {
         return find(index)->data;
     }
 
     ListNode<T> *getFirst(){return this->first;}
     ListNode<T> *getLast(){ return this->last;}
-    int getLen(){ return this->len;}
+    int getLen() const { return this->len;}
 
 protected:
     int len;
