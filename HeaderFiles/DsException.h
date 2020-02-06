@@ -9,15 +9,22 @@
 #include <ctime>
 using namespace std;
 
-//异常基类
+//其他异常
 class Ex{
 public:
     Ex(){}
-    virtual void print(){}
+    Ex(string info): info(info){}
+    void print(){}
+    void printInfo(){
+        cout << "Exception: ";
+        cout << info << endl; }
+
+private:
+    string info;
 };
 
 //下标溢出异常
-class IndexOutException: public Ex{
+class IndexOutException{
 public:
     IndexOutException(){}
     void print(){
@@ -26,7 +33,7 @@ public:
 };
 
 //NoFound异常
-class NoFound: public Ex{
+class NoFound{
 public:
     NoFound(){}
     void print(){
@@ -35,7 +42,7 @@ public:
 };
 
 //存储溢出异常
-class OverFlowException: public Ex{
+class OverFlowException{
 public:
     OverFlowException(){}
     void print(){
@@ -44,7 +51,7 @@ public:
 };
 
 //未初始化异常
-class NullPointer: public Ex{
+class NullPointer{
 public:
     NullPointer(){}
     void print(){
