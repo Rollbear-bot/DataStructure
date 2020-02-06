@@ -2,14 +2,19 @@
 // Created by 13592 on 2019/11/11.
 // 实验八：二叉树与图
 
+
+
 #ifndef DATASTRUCTURE_MENU8_H
 #define DATASTRUCTURE_MENU8_H
+
+#if 1
 
 #include "../Others/FromTextbook/MinHeap.h"
 #include "../Others/FromTextbook/BinaryTree.h"
 #include "../Exp2/List.h"
 #include "BinTreeByLinearTable.h"
 #include"..//UiCollection.h"
+#include "BinTreeByLink.h"
 
 class Menu8{
 public:
@@ -84,39 +89,33 @@ public:
         }while (preCmd);
     }
 
-    //二叉树测试菜单：顺序表实现
+    //二叉树测试菜单
     static void binTreeMenu(){
-        int preCmd, index, value, len;
-        List<int> inputList(0), outputList;
+        int preCmd, index, value, len, choice;
+        string GTable;
+        List<char> outputList;
 
-        /*
-        cout << "二叉树（顺序表实现）测试" << endl << "首先建立树" << endl;
-        UiCollection::printLine();
-        cout << "请输入要输入的元素的个数：";
-        cin >> len;
-        UiCollection::printLine();
-        for(index = 0; index < len; index++){
-            cout << "请输入第" << index+1 << "个元素：";
-            cin >> value;
-            inputList.append(value);
+
+        BinTreeByLink<char> bt("#", '#');
+        cout << "0: 通过广义表建立二叉树 1:交互式建立二叉树" << endl;
+        cin >> choice;
+        if(choice){
+            bt = BinTreeByLink<char>('#');
+        } else {
+            cout << "请输入广义表：" << endl;
+            cin >> GTable;
+            bt = BinTreeByLink<char>(GTable, '#');
         }
-        //使用输入的元素链表来构造二叉树
-         */
-
-        //test
-        int arr[] = {1,2,3,4,5,6,7,8};
-        inputList = List<int>(8,arr);
-        BinTreeByLinearTable<int> bt(inputList);
 
         cout << "二叉树建立成功！" << endl;
         string menuChoice[] = {"输出层次序遍历序列", "输出前序遍历序列", "输出中序遍历序列", "输出后序遍历序列", "删除结点"};
         do{
-            preCmd = UiCollection::choices("二叉树测试菜单：顺序表实现", 5, menuChoice, false);
+            preCmd = UiCollection::choices("二叉树测试菜单", 5, menuChoice, false);
             switch (preCmd){
                 case 1:
                     UiCollection::printLine();
                     try {
-                        outputList = bt.levelVisit();
+                        outputList = bt.layerTraversalWithoutRecursion();
                         cout << "层次序输出为：" << endl;
                         outputList.printList();
                     }catch (IndexOutException e){
@@ -129,9 +128,9 @@ public:
                     break;
 
                 case 2:
-                    //这一分支的异常处理已在接口内完成
+                    //这一分支的异常处理已在函数内完成
                     UiCollection::printLine();
-                    outputList = bt.preVisit();
+                    outputList = bt.preOrderTraversal();
                     cout << "前序遍历输出为：" << endl;
                     outputList.printList();
                     UiCollection::pause();
@@ -140,7 +139,7 @@ public:
 
                 case 3:
                     UiCollection::printLine();
-                    outputList = bt.inVisit();
+                    outputList = bt.inOrderTraversal();
                     cout << "中序遍历输出为：" << endl;
                     outputList.printList();
                     UiCollection::pause();
@@ -149,7 +148,7 @@ public:
 
                 case 4:
                     UiCollection::printLine();
-                    outputList = bt.postVisit();
+                    outputList = bt.postOrderTraversal();
                     cout << "后序遍历输出为：" << endl;
                     outputList.printList();
                     UiCollection::pause();
@@ -161,7 +160,7 @@ public:
                     cin >> index;
                     UiCollection::printLine();
                     try {
-                        bt.delByIndex(index);
+                        bt.removeByIndex(index);
                         cout << "删除成功！" << endl;
                     }catch (IndexOutException e){
                         e.print();
@@ -181,5 +180,8 @@ public:
 
 //静态成员的初始化
 int Menu8::cmd = 0;
+
+
+#endif
 
 #endif //DATASTRUCTURE_MENU8_H
