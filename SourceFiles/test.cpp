@@ -10,17 +10,28 @@
 int main(){
     try {
         //测试区
-        //string generalizeTable = "A(B(D,E(G,)),C(,F))";
-        //BinTreeByLink<char> bt = BinTreeByLink<char>(generalizeTable, '#');
+        const string generalizeTable = "A(B(D,E(G,)),C(,F))";
+        BinTreeByLink<char> bt(generalizeTable, '#');
 
         //交互式建立
-        BinTreeByLink<char> bt;
+        //BinTreeByLink<char> bt;
 
-        List<char> result;
-        result = bt.preOrderTraversal();
-        result.printList();
+        //bt.removeByIndex(2);
+        cout << bt.height() << endl;
+        List<char> resultA, resultB;
+
+
+        BinTreeByLink<char> bt3("#", '#');
+        bt3 = bt;
+
+
+        resultB = bt3.layerTraversalWithoutRecursion();
+        resultB.printList(); //赋值重载不正常
 
         return 0;
+    }
+    catch (Ex ex){
+        ex.printInfo();
     }
     catch (NoFound nf){
         nf.print();
