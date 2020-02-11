@@ -36,13 +36,15 @@ staticSearch.h
 ../Exp1/LinearTable.h
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp1/LinearTable.h
 
-/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp11/FromTextbook/Graph.h
-iostream
--
-
-/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp11/FromTextbook/Graphmtx.h
-Graph.h
-/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp11/FromTextbook/Graph.h
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp11/Graph.h
+../Exp1/LinearTable.h
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp1/LinearTable.h
+../Exp2/List.h
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp2/List.h
+../Exp5/Stack.h
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp5/Stack.h
+../Exp6/Queue.h
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp6/Queue.h
 
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp2/List.h
 ../DsException.h
@@ -149,36 +151,48 @@ String.h
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp5/Stack.h
 
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/BinTreeByLink.h
-iostream
--
 ../Exp2/List.h
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp2/List.h
-
-/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/FromTextbook/BinaryTree.h
-../../Exp5/Stack.h
-/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp5/Stack.h
-iostream
+cmath
 -
-
-/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/FromTextbook/MinHeap.h
-../../Exp6/PQueue.h
-/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp6/PQueue.h
-iostream
+string
 -
 
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/Menu8.h
-FromTextbook/MinHeap.h
-/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/FromTextbook/MinHeap.h
-FromTextbook/BinaryTree.h
-/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/FromTextbook/BinaryTree.h
+../Others/FromTextbook/MinHeap.h
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/MinHeap.h
+../Others/FromTextbook/BinaryTree.h
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/BinaryTree.h
 ../Exp2/List.h
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp2/List.h
 BinTreeByLinearTable.h
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/BinTreeByLinearTable.h
 ../UiCollection.h
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/UiCollection.h
+BinTreeByLink.h
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/BinTreeByLink.h
 
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp9/Menu9.h
+
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/BinaryTree.h
+../../Exp5/Stack.h
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp5/Stack.h
+iostream
+-
+
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/Graph.h
+iostream
+-
+
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/Graphmtx.h
+Graph.h
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/Graph.h
+
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/MinHeap.h
+../../Exp6/PQueue.h
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp6/PQueue.h
+iostream
+-
 
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/HashTable.h
 cstdio
@@ -227,12 +241,14 @@ iostream
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/TestSystem.h
 ../HeaderFiles/Others/HashTable.h
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/HashTable.h
-../HeaderFiles/Exp11/FromTextbook/Graphmtx.h
-/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp11/FromTextbook/Graphmtx.h
+../HeaderFiles/Others/FromTextbook/Graphmtx.h
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/Graphmtx.h
 ../HeaderFiles/Others/Sort.h
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/Sort.h
 ../HeaderFiles/Others/Heap.h
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/Heap.h
 ../HeaderFiles/Exp8/BinTreeByLink.h
 /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/BinTreeByLink.h
+../HeaderFiles/Exp11/Graph.h
+/home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp11/Graph.h
 

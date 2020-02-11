@@ -30,7 +30,6 @@ CMakeFiles/DataStructure.dir/Homework/Ch.5/5.25.cpp.o: ../HeaderFiles/DsExceptio
 CMakeFiles/DataStructure.dir/Homework/Ch.5/5.25.cpp.o: ../HeaderFiles/Exp1/LinearTable.h
 CMakeFiles/DataStructure.dir/Homework/Ch.5/5.25.cpp.o: ../HeaderFiles/Exp2/List.h
 CMakeFiles/DataStructure.dir/Homework/Ch.5/5.25.cpp.o: ../HeaderFiles/Exp5/Stack.h
-CMakeFiles/DataStructure.dir/Homework/Ch.5/5.25.cpp.o: ../HeaderFiles/Exp8/FromTextbook/BinaryTree.h
 CMakeFiles/DataStructure.dir/Homework/Ch.5/5.25.cpp.o: ../Homework/Ch.5/5.25.cpp
 
 CMakeFiles/DataStructure.dir/Homework/Ch.5/5.31.cpp.o: ../HeaderFiles/Exp9/ThreadedBT.h
@@ -59,10 +58,11 @@ CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o: ../HeaderFiles/Exp6/Que
 CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o: ../HeaderFiles/Exp7/Menu7.h
 CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o: ../HeaderFiles/Exp7/String.h
 CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o: ../HeaderFiles/Exp8/BinTreeByLinearTable.h
-CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o: ../HeaderFiles/Exp8/FromTextbook/BinaryTree.h
-CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o: ../HeaderFiles/Exp8/FromTextbook/MinHeap.h
+CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o: ../HeaderFiles/Exp8/BinTreeByLink.h
 CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o: ../HeaderFiles/Exp8/Menu8.h
 CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o: ../HeaderFiles/Exp9/Menu9.h
+CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o: ../HeaderFiles/Others/FromTextbook/BinaryTree.h
+CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o: ../HeaderFiles/Others/FromTextbook/MinHeap.h
 CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o: ../HeaderFiles/TestSystem.h
 CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o: ../HeaderFiles/UiCollection.h
 CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o: ../SourceFiles/mainMenu.cpp
@@ -72,8 +72,7 @@ CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp1/LinearT
 CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp1/Menu1.h
 CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp10/Menu10.h
 CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp10/staticSearch.h
-CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp11/FromTextbook/Graph.h
-CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp11/FromTextbook/Graphmtx.h
+CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp11/Graph.h
 CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp2/List.h
 CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp2/Menu2.h
 CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp3/CircleList.h
@@ -93,10 +92,12 @@ CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp7/Menu7.h
 CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp7/String.h
 CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp8/BinTreeByLinearTable.h
 CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp8/BinTreeByLink.h
-CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp8/FromTextbook/BinaryTree.h
-CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp8/FromTextbook/MinHeap.h
 CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp8/Menu8.h
 CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Exp9/Menu9.h
+CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Others/FromTextbook/BinaryTree.h
+CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Others/FromTextbook/Graph.h
+CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Others/FromTextbook/Graphmtx.h
+CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Others/FromTextbook/MinHeap.h
 CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Others/HashTable.h
 CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Others/Heap.h
 CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o: ../HeaderFiles/Others/Sort.h

@@ -348,7 +348,7 @@ protected:
     //从层次序遍历序列建立二叉树，返回二叉树的根节点
     BinTreeNode<T> *BuildByLayerTraversalList(const List<T> &layerList){
         int listIndex = 0;
-        BinTreeNode<T> *r = new BinTreeNode<T>(layerList.getEle(listIndex),
+        BinTreeNode<T> *r = new BinTreeNode<T>(layerList.getElem(listIndex),
                                                nullptr, nullptr, nullptr);
         BinTreeNode<T> *currentNode;
 
@@ -358,12 +358,12 @@ protected:
         while(listIndex < layerList.getLen()){
             currentNode = queue.quit();
             currentNode->leftChild =
-                    new BinTreeNode<T>(layerList.getEle(++listIndex), nullptr, nullptr,
+                    new BinTreeNode<T>(layerList.getElem(++listIndex), nullptr, nullptr,
                                        currentNode);
             if(listIndex >= layerList.getLen()) break;
 
             currentNode->rightChild =
-                    new BinTreeNode<T>(layerList.getEle(++listIndex), nullptr, nullptr,
+                    new BinTreeNode<T>(layerList.getElem(++listIndex), nullptr, nullptr,
                                        currentNode);
             queue.enter(currentNode->leftChild);
             queue.enter(currentNode->rightChild);

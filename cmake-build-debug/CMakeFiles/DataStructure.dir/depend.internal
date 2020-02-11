@@ -31,7 +31,6 @@ CMakeFiles/DataStructure.dir/Homework/Ch.5/5.25.cpp.o
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp1/LinearTable.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp2/List.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp5/Stack.h
- /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/FromTextbook/BinaryTree.h
  /home/rollbear/CLionProjects/DataStructure/Homework/Ch.5/5.25.cpp
 CMakeFiles/DataStructure.dir/Homework/Ch.5/5.31.cpp.o
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp9/ThreadedBT.h
@@ -60,10 +59,11 @@ CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp7/Menu7.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp7/String.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/BinTreeByLinearTable.h
- /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/FromTextbook/BinaryTree.h
- /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/FromTextbook/MinHeap.h
+ /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/BinTreeByLink.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/Menu8.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp9/Menu9.h
+ /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/BinaryTree.h
+ /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/MinHeap.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/TestSystem.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/UiCollection.h
  /home/rollbear/CLionProjects/DataStructure/SourceFiles/mainMenu.cpp
@@ -73,8 +73,7 @@ CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp1/Menu1.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp10/Menu10.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp10/staticSearch.h
- /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp11/FromTextbook/Graph.h
- /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp11/FromTextbook/Graphmtx.h
+ /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp11/Graph.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp2/List.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp2/Menu2.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp3/CircleList.h
@@ -94,10 +93,12 @@ CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp7/String.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/BinTreeByLinearTable.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/BinTreeByLink.h
- /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/FromTextbook/BinaryTree.h
- /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/FromTextbook/MinHeap.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp8/Menu8.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Exp9/Menu9.h
+ /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/BinaryTree.h
+ /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/Graph.h
+ /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/Graphmtx.h
+ /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/MinHeap.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/HashTable.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/Heap.h
  /home/rollbear/CLionProjects/DataStructure/HeaderFiles/Others/Sort.h

@@ -1,6 +1,7 @@
 //
 // Created by 13592 on 2019/12/18.
 //
+#if 0
 
 #ifndef DATASTRUCTURE_GRAPH_H
 #define DATASTRUCTURE_GRAPH_H
@@ -79,3 +80,5 @@ Graph<T, E>::~Graph() {
 }
 
 #endif //DATASTRUCTURE_GRAPH_H
+
+#endif

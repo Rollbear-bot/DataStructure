@@ -2,6 +2,8 @@
 // Created by 13592 on 2019/11/17.
 // p132 3.15
 
+#if 0
+
 #include "../../HeaderFiles/Exp2/List.h"
 
 //求最大整数的递归算法
@@ -40,3 +42,5 @@ int main(){
     cout << "平均值为：" << aver(lt, 0, 0, 0) << endl;
     return 0;
 }*/
+
+#endif
