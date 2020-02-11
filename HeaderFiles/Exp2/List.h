@@ -40,6 +40,15 @@ public:
         this->last = flag;
     }
 
+    //判等
+    bool operator ==(const List<T> &another){
+        if(this->getLen() != another.getLen()) return false;
+        bool equal = false;
+        for(int index = 0; index < this->getLen(); index++)
+            if(!(this->getElem(index) == another.getElem(index))) return false;
+        return true;
+    }
+
     //在构造函数中建表
     List(int len = 0){
         this->len = len;
@@ -252,7 +261,7 @@ public:
     }
 
     //获取某个索引位置的元素的值
-    T getEle(int index) const {
+    T getElem(int index) const {
         return find(index)->data;
     }
 
