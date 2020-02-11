@@ -1,4 +1,5 @@
 // 附加头结点的单链表
+// 注意last指向的空间不存放数据，仅为链表结束的标志
 // Created by rollbear on 2019/10/31.
 /*
  * 2019.11.18 起修改为附加头结点的单链表
@@ -13,14 +14,13 @@
 //链表结点
 template <class T>
 struct ListNode{
-    ListNode():next(nullptr){} //地址域的默认值为空指针
+    ListNode():next(nullptr){} //地址域的默认值为nullptr
     ListNode(ListNode *next, T data):next(next), data(data){}
     ListNode* next;
     T data;
 };
 
 //单链表类模板定义
-//注意last指向的空间不存放数据，仅为链表结束的标志
 template <class T>
 class List{
 public:
@@ -94,7 +94,7 @@ public:
         }
     }
 
-    //定义拷贝构造函数方便复用
+    //定义拷贝构造函数
     List(const List<T> &&another){
         this->len = another.len;
         this->first = new ListNode<T>;
@@ -155,7 +155,7 @@ public:
     }
 
     //返回下标表示的前一个结点的指针，index=0时返回头指针first
-    ListNode<T> *preFind(int index){
+    ListNode<T> *preFind(int index) const {
         if(index > len-1 || index < 0)throw IndexOutException();
         if(this->first==nullptr)throw NullPointer();
         if(index == 0)return first;
@@ -179,7 +179,7 @@ public:
     }
 
     //输出表
-    void printList(){
+    void printList() const {
         if(isEmpty())throw NullPointer();
         //flag指向第一个有效数据结点
         ListNode<T> *flag = first->next;
@@ -193,7 +193,7 @@ public:
     }
 
     //根据值返回第一个定位到的结点的下标值，未找到则返回-1
-    int locate(T item){
+    int locate(T item) const {
         for(int index = 0; index < len; index++){
             if(find(index)->data == item)return index;
         }
@@ -201,12 +201,12 @@ public:
     }
 
     //所查找元素是否在链表中
-    bool inList(T item){
+    bool inList(T item) const {
         return locate(item) != -1;
     }
 
     //判空
-    bool isEmpty(){
+    bool isEmpty() const {
         return len == 0;
     }
 
