@@ -19,21 +19,19 @@
 #ifndef DATASTRUCTURE_BINTREEBYLINK_H
 #define DATASTRUCTURE_BINTREEBYLINK_H
 
-#include <iostream>
 #include "../Exp2/List.h"
 #include <cmath>
 #include <string>
-using namespace std;
 
 //二叉树节点的定义
 template <class T>
 struct BinTreeNode{
     //构造函数：孩子指针和父指针默认值为nullptr
-    explicit BinTreeNode(T value,
+    explicit BinTreeNode(T v,
             BinTreeNode<T> *l = nullptr,
             BinTreeNode<T> *r = nullptr,
             BinTreeNode<T> *p = nullptr):
-        value(value), leftChild(l), rightChild(r), parent(p){}
+            value(v), leftChild(l), rightChild(r), parent(p){}
     T value; //数据域
     BinTreeNode<T> *leftChild; //左孩子
     BinTreeNode<T> *rightChild; //右孩子
