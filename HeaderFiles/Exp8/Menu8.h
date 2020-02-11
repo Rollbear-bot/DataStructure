@@ -108,9 +108,18 @@ public:
         }
 
         cout << "二叉树建立成功！" << endl;
-        string menuChoice[] = {"输出层次序遍历序列", "输出前序遍历序列", "输出中序遍历序列", "输出后序遍历序列", "删除结点"};
+        string menuChoice[] = {"输出层次序遍历序列",
+                               "输出前序遍历序列",
+                               "输出中序遍历序列",
+                               "输出后序遍历序列",
+                               "删除结点",
+                               "统计树高",
+                               "统计树节点数",
+                               "统计叶子节点数",
+                               "获取某个节点的数据值",
+                               "展示从根节点到某个节点的路径"};
         do{
-            preCmd = UiCollection::choices("二叉树测试菜单", 5, menuChoice, false);
+            preCmd = UiCollection::choices("二叉树测试菜单", 10, menuChoice, false);
             switch (preCmd){
                 case 1:
                     UiCollection::printLine();
@@ -165,6 +174,40 @@ public:
                     }catch (IndexOutException e){
                         e.print();
                     }
+                    UiCollection::pause();
+                    UiCollection::clear();
+                    break;
+
+                case 6:
+                    cout << "树高为：" << bt.height() << endl;
+                    UiCollection::pause();
+                    UiCollection::clear();
+                    break;
+
+                case 7:
+                    cout << "节点数为：" << bt.numOfNodes() << endl;
+                    UiCollection::pause();
+                    UiCollection::clear();
+                    break;
+
+                case 8:
+                    cout << "叶子节点数为：" << bt.numOfLeaves() << endl;
+                    UiCollection::pause();
+                    UiCollection::clear();
+                    break;
+
+                case 9:
+                    cout << "请输入该节点的层次序序号（根节点的序号为1）：";
+                    cin >> index;
+                    cout << "该节点的数据值为：" << bt.getNodeValue(index) << endl;
+                    UiCollection::pause();
+                    UiCollection::clear();
+                    break;
+
+                case 10:
+                    cout << "请输入该节点的层次序序号（根节点的序号为1）：";
+                    cin >> index;
+                    cout << "路径为：" << bt.printPathFromRoot(index) << endl;
                     UiCollection::pause();
                     UiCollection::clear();
                     break;
