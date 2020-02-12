@@ -25,7 +25,7 @@ template <class T>
 class List{
 public:
     //赋值运算符重载
-    List<T> operator =(const List<T> &operand){
+    void operator =(const List<T> &operand){
         this->len = operand.len;
         this->first = new ListNode<T>;
         ListNode<T> *flag = first;
@@ -38,6 +38,7 @@ public:
         flag->next = new ListNode<T>;
         flag = flag->next;
         this->last = flag;
+        return;
     }
 
     //判等
@@ -104,7 +105,7 @@ public:
     }
 
     //定义拷贝构造函数
-    List(const List<T> &&another){
+    List(const List<T> &another){
         this->len = another.len;
         this->first = new ListNode<T>;
         ListNode<T> *flag = first;
@@ -236,8 +237,8 @@ public:
     }
 
     //表合并：将另一个表附加到当前表尾，函数返回新表
-    List<T> &add(List<T> &another){
-        List<T> sln = *this;
+    List<T> &add(const List<T> &another){
+        List<T> sln(*this);
         for(int index = 0; index < another.getLen(); index++){
             sln.append(another.find(index)->data);
         }
@@ -251,11 +252,11 @@ public:
         for(i = 0; i < this->len-1; i++){
             k = i;
             for(j = i + 1; j < len; j++){
-                if(find(k) > find(j)) k = j;
+                if(getElem(k) > getElem(j)) k = j;
             }
             //交换k和i的值
-            temp = find(i);
-            alter(i, find(k));
+            temp = getElem(i);
+            alter(i, getElem(k));
             alter(k, temp);
         }
     }
@@ -264,6 +265,15 @@ public:
     T getElem(int index) const {
         return find(index)->data;
     }
+
+
+    //从链表的头部弹出一个元素，并将它删除（将表视为队列来使用）
+    T quit(){
+        T tmp = getElem(0);
+        delByIndex(0);
+        return tmp;
+    }
+
 
     ListNode<T> *getFirst(){return this->first;}
     ListNode<T> *getLast(){ return this->last;}
