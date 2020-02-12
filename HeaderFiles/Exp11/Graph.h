@@ -13,17 +13,35 @@
 template <class T, class E>
 struct Edge{
     //构造函数
-    explicit Edge(int dest = 0, E cost = NULL):
-        dest(dest), cost(cost){}
+    explicit Edge(int start = 0, int dest = 0, E cost = NULL):
+        start(start), dest(dest), cost(cost){}
 
-    int dest; //该边连接的顶点（使用编号表示）
-    E cost; //边上的权值
-    //Edge<T, E> *nextEdge; //下一条边链
-
-    //边判等
+    //边判等（逻辑运算符重载）
     bool operator ==(const Edge<T, E> &another) const {
         return (dest == another.dest) && (cost == another.cost);
     }
+
+    //权值比较
+    bool operator <(const Edge<T, E> &another){
+        return this->cost < another.cost;
+    }
+    bool operator >(const Edge<T, E> &another){
+        return this->cost > another.cost;
+    }
+
+    //赋值重载
+    Edge<T, E> operator =(const Edge<T, E> &operand){
+        this->cost = operand.cost;
+        this->dest = operand.start;
+        this->dest = operand.dest;
+    }
+
+    int dest; //该边的终点（使用编号表示）
+    int start; //边的起点
+    E cost; //边上的权值
+
+    //Edge<T, E> *nextEdge; //下一条边链，这里因为用了List结构来储存边，
+    //因此就不需要next这个地址域了
 };
 
 
@@ -32,20 +50,21 @@ template <class T, class E>
 struct GraphNode{
 public:
     //构造函数
-    explicit GraphNode(T value): value(value){}
+    explicit GraphNode(T value, int index): value(value), index(index){}
     GraphNode(): value(0){}
     //拷贝构造函数
     GraphNode(const GraphNode<T, E> &another){
         this->value = another.value;
         this->EdgeTable = another.EdgeTable;
     }
-    T value; //该顶点的数据
-    List<Edge<T, E>> EdgeTable; //该顶点的链接边表
-
     //判等
     bool operator ==(const GraphNode<T, E> &another){
         return value == another.value && EdgeTable == another.EdgeTable;
     }
+
+    T value; //该顶点的数据
+    List<Edge<T, E>> EdgeTable; //该顶点的链接边表
+    int index = 0;
 };
 
 
@@ -56,26 +75,41 @@ public:
     //构造函数
     Graph(){}
 
-
     //拷贝构造函数
     Graph(const Graph<T, E> &another){
         this->NodeTable = another.NodeTable;
     }
 
+    //析构函数
+    ~Graph(){
+        //todo::销毁图
+    }
+
+    //赋值运算符重载
+    Graph<T, E> operator =(const Graph<T, E> &operand){
+        this->NodeTable = operand.NodeTable;
+        return Graph<T,E>(*this);
+    }
+
+    //图判等
+    bool operator ==(const Graph<T, E> &operand) const {
+        return this->NodeTable == operand.NodeTable;
+    }
 
 public:
     //添加结点（没有入度的孤立点）
     bool addNode(T value){
-        this->NodeTable.append(GraphNode<T, E>(value));
+        this->NodeTable.append(GraphNode<T, E>(value, NodeTable.getLen()));
+        return true;
     }
 
 
     //在图中插入一条边
     bool addEdge(int nodeA, int nodeB, E cost){
         //将边链入A节点的边表
-        NodeTable.find(nodeA)->data.EdgeTable.append(Edge<T, E>(nodeB, cost));
+        NodeTable.find(nodeA)->data.EdgeTable.append(Edge<T, E>(nodeA, nodeB, cost));
         //将边链入B节点的边表
-        NodeTable.find(nodeB)->data.EdgeTable.append(Edge<T, E>(nodeA, cost));
+        NodeTable.find(nodeB)->data.EdgeTable.append(Edge<T, E>(nodeB, nodeA, cost));
         return true;
     }
 
@@ -83,7 +117,7 @@ public:
     //深度优先遍历：返回遍历结果的链表
     //使用栈实现，对于每个节点A，先访问，然后从它的邻接表中取出第一个节点B，然后将节点A入栈；
     //如果A的邻接表中没有节点，则从栈顶去一个节点，直到栈空
-    static List<T> DFS(Graph<T, E> graph){
+    static List<T> DFS(Graph<T, E> graph, int start){
         List<T> result;
         Stack<GraphNode<T, E>*> stack(2*graph.numOfNode());
         GraphNode<T, E> *temp, *currentNode = graph.getNode(0);
@@ -123,12 +157,12 @@ public:
     //广度优先遍历：返回遍历结果的链表
     //使用队列实现，对于每个节点，首先访问它，然后将它的所有临接点入队列，
     //从队头取节点，重复以上（注意设置“已访问”标记）直到队列空
-    static List<T> BFS(Graph<T, E> graph){
+    static List<T> BFS(Graph<T, E> graph, int start){
         List<T> result;
         Queue<GraphNode<T, E>*> queue(2*graph.numOfNode());
         List<GraphNode<T, E>*> visited(graph.numOfNode()); //访问标记
         GraphNode<T, E> *current;
-        queue.enter(graph.getNode(0)); //从编号为0的节点开始访问
+        queue.enter(graph.getNode(start)); //从编号为start的节点开始访问
 
         do{
             current = queue.quit();
@@ -147,13 +181,69 @@ public:
     }
 
 
+    //最小生成树：克鲁斯卡尔算法
+    static BinTreeByLink<T> MST_Kruskal(const Graph<T, E> &graph){
+        //首先取出所有的边，将他们组成一个集合，并按照权值从小到大的顺序排序
+        int numOfEdges = 0;
+        //计算边集合需要的大小
+        for(int index = 0; index < graph.numOfNode(); index++){
+            numOfEdges += graph.NodeTable.getElem(index).EdgeTable.getLen();
+        }
+        List<Edge<T, E>> edges(numOfEdges);
+        for(int index = 0; index < graph.numOfNode(); index++){
+            edges.add(graph.NodeTable.getElem(index).EdgeTable); //获取所有边
+        }
+        edges.insertSort(); //按照权值从小到大排序
+
+        List<Edge<T, E>> result; //结果的边集
+        int maxEdges = graph.numOfNode()-1;
+        Edge<T, E> curEdge;
+        Graph<T, E> tree;
+        //开始构造生成树，每次从边表中取出权值最小的一条边，判断它是否是可用边，
+        //结果集中的边数到达顶点数-1时（二叉树的边数==结点数-1）停止
+        while (result.getLen() < maxEdges){
+            //从表edges首部取出一条边
+            curEdge = edges.quit();
+            //判断它是否是有效的边，非有效则跳过
+            if(!tree.isEmpty()){
+                if(!accessible(tree, curEdge.start, curEdge.dest)) continue;
+                else result.append(curEdge);
+            }
+            //将新的点加入生成树tree
+            if(!tree.NodeTable.inList(graph.getElem(curEdge.start)))
+                tree.addNode(graph.getElem(curEdge.start));
+            if(!tree.NodeTable.inList(graph.getElem(curEdge.dest)))
+                tree.addNode(graph.getElem(curEdge.dest));
+            //将新的边加入生成树
+            tree.addEdge(curEdge);
+        }
+
+        //然后从结果边集构造二叉树
+
+
+    }
+
+
+    //最小生成树：Prim算法
+    static BinTreeByLink<T> MST_Prim(const Graph<T, E> &graph){
+
+    }
+
+
+    //判断图中的两个点是否在同一个连通分量上
+    static bool accessible(const Graph<T, E> &graph, int nodeA, int nodeB){
+        //通过广度遍历的结果来判断是否联通（不在遍历结果中即不可达）
+        return BFS(graph, nodeA).inList(graph.getElem(nodeB));
+    }
+
+
     //节点个数
     int numOfNode() const {
         return this->NodeTable.getLen();
     }
 
 
-    //获取某个节点的数据值
+    //获取某个节点的数据值，序号为顶点表NodeTable中的序号
     T getElem(int index) const {
         return NodeTable.getElem(index).value;
     }
@@ -165,6 +255,10 @@ protected:
     //返回指向某个节点的指针
     GraphNode<T, E> *getNode(int index){
         return &(this->NodeTable.find(index)->data);
+    }
+
+    bool isEmpty(){
+        return NodeTable.isEmpty();
     }
 };
 
