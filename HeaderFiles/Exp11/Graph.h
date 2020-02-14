@@ -16,9 +16,18 @@ struct Edge{
     explicit Edge(int start = 0, int dest = 0, E cost = NULL):
         start(start), dest(dest), cost(cost){}
 
+    //拷贝构造函数
+    Edge(const Edge<T, E> &another){
+        this->start = another.start;
+        this->dest = another.dest;
+        this->cost = another.cost;
+    }
+
     //边判等（逻辑运算符重载）
     bool operator ==(const Edge<T, E> &another) const {
-        return (dest == another.dest) && (cost == another.cost);
+        return (start == another.start)
+        && (dest == another.dest)
+        && (cost == another.cost);
     }
 
     //权值比较
@@ -32,8 +41,9 @@ struct Edge{
     //赋值重载
     Edge<T, E> operator =(const Edge<T, E> &operand){
         this->cost = operand.cost;
-        this->dest = operand.start;
+        this->start = operand.start;
         this->dest = operand.dest;
+        return Edge<T, E>(start, dest, cost);
     }
 
     int dest; //该边的终点（使用编号表示）
@@ -56,10 +66,12 @@ public:
     GraphNode(const GraphNode<T, E> &another){
         this->value = another.value;
         this->EdgeTable = another.EdgeTable;
+        this->index = another.index;
     }
     //判等
     bool operator ==(const GraphNode<T, E> &another){
-        return value == another.value && EdgeTable == another.EdgeTable;
+        return value == another.value;
+        //节点相等不需要满足“与他们相连的边也一样”
     }
 
     T value; //该顶点的数据
@@ -105,11 +117,13 @@ public:
 
 
     //在图中插入一条边
-    bool addEdge(int nodeA, int nodeB, E cost){
+    bool addEdge(const Edge<T, E> &edge){
         //将边链入A节点的边表
-        NodeTable.find(nodeA)->data.EdgeTable.append(Edge<T, E>(nodeA, nodeB, cost));
+        NodeTable.find(edge.start)->data.EdgeTable.append(
+                Edge<T, E>(edge.start, edge.dest, edge.cost));
         //将边链入B节点的边表
-        NodeTable.find(nodeB)->data.EdgeTable.append(Edge<T, E>(nodeB, nodeA, cost));
+        NodeTable.find(edge.dest)->data.EdgeTable.append(
+                Edge<T, E>(edge.dest, edge.start, edge.cost));
         return true;
     }
 
@@ -182,22 +196,32 @@ public:
 
 
     //最小生成树：克鲁斯卡尔算法
-    static BinTreeByLink<T> MST_Kruskal(const Graph<T, E> &graph){
+    static Graph<T, E> MST_Kruskal(const Graph<T, E> &graph){
         //首先取出所有的边，将他们组成一个集合，并按照权值从小到大的顺序排序
         int numOfEdges = 0;
         //计算边集合需要的大小
         for(int index = 0; index < graph.numOfNode(); index++){
             numOfEdges += graph.NodeTable.getElem(index).EdgeTable.getLen();
         }
-        List<Edge<T, E>> edges(numOfEdges);
-        for(int index = 0; index < graph.numOfNode(); index++){
-            edges.add(graph.NodeTable.getElem(index).EdgeTable); //获取所有边
+        List<Edge<T, E>> edges = graph.getNode(0)->EdgeTable;
+        /*
+        for(int index = 0; index < graph.numOfNode(); index++)
+            for(int edgeIndex = 0;
+            edgeIndex < graph.getNode(index)->EdgeTable.getLen();
+            edgeIndex++)
+                //添加所有边到edges表
+                edges.append(graph.getNode(index)->EdgeTable.getElem(edgeIndex));
+        */
+
+        for(int index = 1; index < graph.numOfNode(); index++){
+            edges = List<Edge<T, E>>::add(edges, graph.getNode(index)->EdgeTable);
         }
+
         edges.insertSort(); //按照权值从小到大排序
 
         List<Edge<T, E>> result; //结果的边集
         int maxEdges = graph.numOfNode()-1;
-        Edge<T, E> curEdge;
+        Edge<T, E> curEdge(0);
         Graph<T, E> tree;
         //开始构造生成树，每次从边表中取出权值最小的一条边，判断它是否是可用边，
         //结果集中的边数到达顶点数-1时（二叉树的边数==结点数-1）停止
@@ -205,22 +229,23 @@ public:
             //从表edges首部取出一条边
             curEdge = edges.quit();
             //判断它是否是有效的边，非有效则跳过
-            if(!tree.isEmpty()){
-                if(!accessible(tree, curEdge.start, curEdge.dest)) continue;
-                else result.append(curEdge);
-            }
+            if(!tree.isEmpty())
+                if(accessible(tree, curEdge.start, curEdge.dest)
+                || (curEdge.start == curEdge.dest))
+                    continue;
+            result.append(curEdge);
             //将新的点加入生成树tree
-            if(!tree.NodeTable.inList(graph.getElem(curEdge.start)))
+            if(!tree.NodeTable.inList(*graph.getNode(curEdge.start)))
                 tree.addNode(graph.getElem(curEdge.start));
-            if(!tree.NodeTable.inList(graph.getElem(curEdge.dest)))
+            if(!tree.NodeTable.inList(*graph.getNode(curEdge.dest)))
                 tree.addNode(graph.getElem(curEdge.dest));
             //将新的边加入生成树
             tree.addEdge(curEdge);
         }
 
+        //todo::如何从一个具有二叉树特征的图建立二叉树的链接结构
         //然后从结果边集构造二叉树
-
-
+        return tree;
     }
 
 
@@ -232,6 +257,9 @@ public:
 
     //判断图中的两个点是否在同一个连通分量上
     static bool accessible(const Graph<T, E> &graph, int nodeA, int nodeB){
+        if(nodeA >= graph.NodeTable.getLen()
+        || nodeB >= graph.NodeTable.getLen())
+            return false;
         //通过广度遍历的结果来判断是否联通（不在遍历结果中即不可达）
         return BFS(graph, nodeA).inList(graph.getElem(nodeB));
     }
@@ -249,11 +277,24 @@ public:
     }
 
 
+    //打印所有边
+    void printAllEdges() const {
+        Edge<T, E> curEdge;
+        for(int index = 0; index < numOfNode(); index++){
+            for(int i = 0; i < NodeTable.getElem(index).EdgeTable.getLen(); i++){
+                curEdge = NodeTable.getElem(index).EdgeTable.getElem(i);
+                cout << "(" << curEdge.start << ", " << curEdge.dest << ") ";
+            }
+        }
+        cout << endl;
+    }
+
+
 protected:
     List<GraphNode<T, E>> NodeTable; //顶点表（邻接表）
 
     //返回指向某个节点的指针
-    GraphNode<T, E> *getNode(int index){
+    GraphNode<T, E> *getNode(int index) const {
         return &(this->NodeTable.find(index)->data);
     }
 
