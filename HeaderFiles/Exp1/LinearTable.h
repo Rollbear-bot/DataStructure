@@ -9,6 +9,8 @@
 #ifndef DATASTRUCTURE_LINEARTABLE_H
 #define DATASTRUCTURE_LINEARTABLE_H
 
+#define MaxLen 50
+
 #include <iostream>
 #include "../DsException.h"
 #include "../Exp2/List.h"
@@ -17,20 +19,16 @@ using namespace std;
 //线性表的顺序实现
 template <class T>
 class LinearTable{
-    //friend class BinTreeByLinearTable<T>;
 public:
-    //无参数的构造函数：默认表长为最大值
-    LinearTable(){ LinearTable(49);}
-
     //指定表长的构造函数
-    LinearTable(int maxLen){
-        if(maxLen>=50)throw OverFlowException();
+    LinearTable(int maxLen = MaxLen-1){
+        if(maxLen >= MaxLen)throw OverFlowException();
         this->max = maxLen;
     }
 
     //从数组构造
     LinearTable(int maxLen, int arrLen, T arr[]){
-        if(maxLen>=50)throw OverFlowException();
+        if(maxLen >= MaxLen)throw OverFlowException();
         if(arrLen>maxLen)throw OverFlowException();
         this->max = maxLen;
         this->last = arrLen;
@@ -158,7 +156,7 @@ public:
     int getMax(){ return this->max;}
 
 protected:
-    T data[50]; //数据空间
+    T data[MaxLen]; //数据空间
     int last = 0; //最后一个有效数据单元的下一个位置，标记表尾，不存放有效数据
     int max; //最大长度
 };
