@@ -123,20 +123,10 @@ public:
 public:
     //追加到链表尾
     void append(T item){
-        //如果表空，单独考虑
-        if(isEmpty()){
-            //头节点的下一个结点即为新的结点
-            this->first->next = new ListNode<T>(new ListNode<T>(), item);
-            //新节点的下一个结点即为last指向的结点
-            this->last = first->next->next;
-            len++;
-        } else{
-            //表不空时
             last->data = item;
             last->next = new ListNode<T>;
             last = last->next;
             len++;
-        }
     }
 
     //删除结点
@@ -166,7 +156,7 @@ public:
 
     //返回下标表示的前一个结点的指针，index=0时返回头指针first
     ListNode<T> *preFind(int index) const {
-        if(index > len-1 || index < 0)throw IndexOutException();
+        if(index > len || index < 0)throw IndexOutException();
         if(this->first==nullptr)throw NullPointer();
         if(index == 0)return first;
         else return find(index-1);
@@ -237,13 +227,13 @@ public:
     }
 
     //表合并：将另一个表附加到当前表尾，函数返回新表
-    List<T> &add(const List<T> &another){
-        List<T> sln(*this);
-        for(int index = 0; index < another.getLen(); index++){
-            sln.append(another.find(index)->data);
-        }
-        return sln;
+    static List<T> add(List<T> preList, List<T> postList){
+        ListNode<T> *cur = preList.preFind(preList.getLen());
+        cur->next = postList.first->next;
+        preList.len += postList.len;
+        return preList;
     }
+
 
     //插入排序：从小到大
     void insertSort(){
@@ -280,7 +270,7 @@ public:
     int getLen() const { return this->len;}
 
 protected:
-    int len;
+    int len; //辅助计数
     ListNode<T> *first; //first指向附加头节点，该节点不存放有效数据
     ListNode<T> *last; //last指向的结点不存放数据，仅为链表结束的标志
 };
