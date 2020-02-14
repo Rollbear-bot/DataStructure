@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/HeaderFiles/Exp1/LinearTable.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/HeaderFiles/Exp1/Menu1.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/HeaderFiles/Exp10/Menu10.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/HeaderFiles/Exp10/staticSearch.h" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/HeaderFiles/Exp11/FromTextbook/Graph.h" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/HeaderFiles/Exp11/FromTextbook/Graphmtx.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/HeaderFiles/Exp2/Menu2.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/HeaderFiles/Exp3/Menu3.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/HeaderFiles/Exp4/Menu4.h" charset="GBK" />
@@ -19,11 +17,8 @@
     <file url="file://$PROJECT_DIR$/HeaderFiles/Exp6/Menu6.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/HeaderFiles/Exp7/Menu7.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/HeaderFiles/Exp7/String.h" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/HeaderFiles/Exp8/BinTree.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/HeaderFiles/Exp8/Menu8.h" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/HeaderFiles/Exp8/MinHeap.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/HeaderFiles/Exp9/ThreadedBT.h" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/HeaderFiles/Others/Graph.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/HeaderFiles/Others/HashTable.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/HeaderFiles/TestSystem.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/HeaderFiles/UiCollection.h" charset="GBK" />

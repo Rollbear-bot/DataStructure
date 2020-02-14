@@ -1,16 +1,10 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/DataStructure.dir/Homework/Ch.1/1.17.cpp.o"
-  "CMakeFiles/DataStructure.dir/Homework/Ch.2/2.12.cpp.o"
-  "CMakeFiles/DataStructure.dir/Homework/Ch.2/2.17.cpp.o"
-  "CMakeFiles/DataStructure.dir/Homework/Ch.2/2.19.cpp.o"
-  "CMakeFiles/DataStructure.dir/Homework/Ch.3/3.10.cpp.o"
-  "CMakeFiles/DataStructure.dir/Homework/Ch.3/3.15.cpp.o"
-  "CMakeFiles/DataStructure.dir/Homework/Ch.5/5.25.cpp.o"
-  "CMakeFiles/DataStructure.dir/Homework/Ch.5/5.31.cpp.o"
-  "CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.o"
-  "CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.o"
-  "DataStructure"
+  "CMakeFiles/DataStructure.dir/SourceFiles/mainMenu.cpp.obj"
+  "CMakeFiles/DataStructure.dir/SourceFiles/test.cpp.obj"
+  "DataStructure.exe"
+  "DataStructure.exe.manifest"
   "DataStructure.pdb"
+  "libDataStructure.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

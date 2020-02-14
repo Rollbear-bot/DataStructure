@@ -38,7 +38,7 @@ protected:
     void slide(int parent){
         //已经到达堆底，退出递归
         if(parent/2 + 1 > MaxHeapDepth-1 || parent > MaxHeapDepth-1) return;
-        //todo::滑动存在存在问题
+        //todo::滑动存在问题
         //递归判断是否需要滑动，直到堆底
         if(data[parent] > data[parent/2]) {
             //交换父节点和该子节点的值
