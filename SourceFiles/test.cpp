@@ -20,12 +20,11 @@ int main(){
         graph.addEdge(Edge<char, int>(0, 2, 0));
         graph.addEdge(Edge<char, int>(1, 2, 0));
         graph.addEdge(Edge<char, int>(1, 3, 0));
-        //Graph<char,int>::DFS(graph).printList();
-        cout << "BFS:";
-        Graph<char, int>::BFS(graph, 0).printList();
 
+        Graph<char, int> MST = Graph<char, int>::MST_Prim(graph);
+        cout << "MST:";
+        Graph<char, int>::BFS(MST).printList();
         cout << "edges of MST:";
-        Graph<char, int> MST = Graph<char, int>::MST_Kruskal(graph);
         MST.printAllEdges();
 
         return 0;

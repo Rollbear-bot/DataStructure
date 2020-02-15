@@ -96,7 +96,7 @@ public:
                     cin >> index;
                     UiCollection::printLine();
                     try {
-                        lt.delByIndex(index);
+                        lt.removeByIndex(index);
                         cout << "É¾³ý³É¹¦£¡" << endl;
                     }catch(IndexOutException e){
                         e.print();

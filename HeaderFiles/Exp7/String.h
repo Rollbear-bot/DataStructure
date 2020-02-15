@@ -51,7 +51,7 @@ public:
 
 
 public:
-    int getLen(){ return this->len;}
+    int getLen() const { return this->len;}
 
     //重写串
     void rewrite(int len) {
@@ -72,7 +72,7 @@ public:
     }
 
     //输出串
-    void printString(){
+    void printString() const {
         for(int index = 0; index < len; index++){
             cout << this->data.find(index)->data;
         }
@@ -80,7 +80,7 @@ public:
     }
 
     //获取某个位置的元素
-    T& getELe(int index){
+    T& getELe(int index) const {
         return data.find(index)->data;
     }
 
@@ -90,7 +90,7 @@ public:
     }
 
     //拼接两个串
-    String<T> &append(String<T> &another){
+    String<T> append(const String<T> &another){
         String<T> sln = *this;
         //在当前串尾附加
         for(int index = 0; index < another.getLen(); index++){
@@ -101,7 +101,7 @@ public:
     }
 
     //取位置index后的长度为len的串
-    String<T> &cutStr(int index, int len){
+    String<T> &cutStr(int index, int len) const {
         String<T> sln(0);
         for(int i = index; i < len + index - 1; i++){
             try {

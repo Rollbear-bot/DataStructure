@@ -130,7 +130,7 @@ public:
     }
 
     //删除结点
-    void delByIndex(int index){
+    void removeByIndex(int index){
         //flag指向要删除的结点的前一个结点
         ListNode<T> *flag = preFind(index);
         //temp指向要删除的结点
@@ -260,7 +260,7 @@ public:
     //从链表的头部弹出一个元素，并将它删除（将表视为队列来使用）
     T quit(){
         T tmp = getElem(0);
-        delByIndex(0);
+        removeByIndex(0);
         return tmp;
     }
 

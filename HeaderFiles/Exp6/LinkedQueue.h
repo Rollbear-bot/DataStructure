@@ -48,7 +48,7 @@ public:
     T& quit(){
         if(isEmpty())throw NullPointer();
         T temp = this->data.find(0);
-        this->data.delByIndex(0);
+        this->data.removeByIndex(0);
         return temp;
     }
 

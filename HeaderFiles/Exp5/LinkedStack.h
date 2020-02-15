@@ -36,7 +36,7 @@ public:
     T pop(){
         if(isEmpty())throw NullPointer();
         T tmp = data.find(data.getLen()-1)->data;
-        data.delByIndex(data.getLen() - 1);
+        data.removeByIndex(data.getLen() - 1);
         return tmp;
     }
 

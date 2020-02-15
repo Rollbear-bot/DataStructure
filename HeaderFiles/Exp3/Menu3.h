@@ -154,7 +154,7 @@ private:
                     cin >> index;
                     UiCollection::printLine();
                     try {
-                        dll.delByIndex(index);
+                        dll.removeByIndex(index);
                         cout << "É¾³ý³É¹¦£¡" << endl;
                     }catch(IndexOutException e){
                         e.print();
