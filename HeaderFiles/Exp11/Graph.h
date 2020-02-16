@@ -70,7 +70,7 @@ public:
     }
     //判等
     bool operator ==(const GraphNode<T, E> &another){
-        return value == another.value;
+        return value == another.value && index == another.index;
         //节点相等不需要满足“与他们相连的边也一样”
     }
 
@@ -128,7 +128,7 @@ public:
     }
 
 
-    //深度优先遍历：返回遍历结果的链表
+    //深度优先遍历（非递归）：返回遍历结果的链表
     //使用栈实现，对于每个节点A，先访问，然后从它的邻接表中取出第一个节点B，然后将节点A入栈；
     //如果A的邻接表中没有节点，则从栈顶去一个节点，直到栈空
     static List<T> DFS(Graph<T, E> graph, int start = 0){
@@ -168,7 +168,7 @@ public:
     }
 
 
-    //广度优先遍历：返回遍历结果的链表，可以指定开始的节点
+    //广度优先遍历（非递归)：返回遍历结果的链表，可以指定开始的节点
     //使用队列实现，对于每个节点，首先访问它，然后将它的所有临接点入队列，
     //从队头取节点，重复以上（注意设置“已访问”标记）直到队列空
     static List<T> BFS(Graph<T, E> graph, int start = 0){
@@ -193,6 +193,28 @@ public:
 
         return result;
     }
+
+
+    //广度优先遍历：递归实现的封装
+    static List<T> recursionBFS(Graph<T, E> graph, int start){
+        return BFS_recursion(graph,
+                             *graph.getNode(start),
+                             List<T>(),
+                             new Queue<GraphNode<T, E>>(graph.numOfNode()));
+    }
+
+
+    //深度优先遍历：递归实现的封装
+    static List<T> recursionDFS(Graph<T, E> graph, int start){
+        return DFS_recursion(graph,
+                *graph.getNode(start),
+                List<T>(),
+                new Stack<GraphNode<T, E>>(graph.numOfNode()));
+    }
+
+
+
+
 
 
     //最小生成树：克鲁斯卡尔算法
@@ -262,7 +284,6 @@ public:
                     }
                 }
             }
-
             //将边按权值从小到大排序，取出权值最小的边，将该边、该边上的点加入结果集
             compare.insertSort();
             miniEdge = compare.quit();
@@ -318,6 +339,7 @@ protected:
         return &(this->NodeTable.find(index)->data);
     }
 
+
     bool isEmpty(){
         return NodeTable.isEmpty();
     }
@@ -334,6 +356,58 @@ protected:
             }
         }
         return res;
+    }
+
+
+    //广度优先遍历：递归实现
+    static List<T> BFS_recursion(Graph<T, E> graph,
+            GraphNode<T, E> curNode,
+            List<T> res,
+            Queue<GraphNode<T, E>> * const queue){
+        //访问当前结点，然后从它出发的所有边的终点进入待访问队列，已访问过的节点除外
+        res.append(curNode.value);
+        List<Edge<T, E>*> tmp = getEdges(graph, curNode.index);
+
+        Edge<T, E> *curEdge;
+        for(int index = 0; index < tmp.getLen(); index++){
+            curEdge = tmp.getElem(index);
+            if(res.inList(graph.getElem(curEdge->dest))
+            || queue->inTable(*graph.getNode(curEdge->dest)))
+                continue; //若该节点已访问过则跳过
+            //否则进入待访问队列
+            queue->enter(*graph.getNode(curEdge->dest));
+        }
+
+        if(queue->isEmpty()) return res; //递归出口
+        //从队列头取出节点，继续访问
+        return BFS_recursion(graph, queue->quit(), res, queue);
+    }
+
+
+    //深度优先遍历：递归实现
+    static List<T> DFS_recursion(Graph<T, E> graph,
+            GraphNode<T, E> curNode,
+            List<T> res,
+            Stack<GraphNode<T, E>> *const stack){
+        //类似二叉树的前序遍历，利用栈
+        //访问当前节点
+        res.append(curNode.value);
+        //获取从当前节点出发的所有边
+        List<Edge<T, E>*> edges = graph.getEdges(graph, curNode.index);
+
+        Edge<T, E> *curEdge;
+        //遍历edges的所有边，移除那些终点已经访问过的
+        for(int index = 0; index < edges.getLen(); index++){
+            curEdge = edges.getElem(index);
+            if(res.inList(graph.getElem(curEdge->dest))
+               || stack->inStack(*graph.getNode(curEdge->dest)))
+                continue; //若该节点已访问过则跳过
+            //否则进入待访问栈
+            stack->push(*graph.getNode(curEdge->dest));
+        }
+
+        if(stack->isEmpty()) return res; //递归出口
+        else return DFS_recursion(graph, stack->pop(), res, stack);
     }
 };
 
