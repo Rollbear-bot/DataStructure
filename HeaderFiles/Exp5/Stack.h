@@ -55,6 +55,8 @@ public:
     //定位元素的下标，未找到则返回-1
     int locate(T item){ return data.locate(item);}
 
+    bool inStack(T item){ return data.inTable(item); }
+
     //获取栈深
     int getMaxLen(){ return data.getMax();}
 

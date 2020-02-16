@@ -11,6 +11,7 @@
 int main(){
     try {
         //²âÊÔÇø
+
         Graph<char, int> graph;
         graph.addNode('A');
         graph.addNode('B');
@@ -21,13 +22,15 @@ int main(){
         graph.addEdge(Edge<char, int>(1, 2, 0));
         graph.addEdge(Edge<char, int>(1, 3, 0));
 
+        Graph<char, int>::recursionDFS(graph, 0).printList();
+
+        /*
         Graph<char, int> MST = Graph<char, int>::MST_Prim(graph);
         cout << "MST:";
         Graph<char, int>::BFS(MST).printList();
         cout << "edges of MST:";
         MST.printAllEdges();
-
-        return 0;
+        */
     }
     /*
     catch (Ex ex){

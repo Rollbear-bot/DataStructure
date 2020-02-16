@@ -13,12 +13,15 @@
 template <class T>
 class Queue{
 public:
-    Queue(){ Queue(0);}
-
     //指定队列长度的构造函数
-    Queue(int maxLen){
+    Queue(int maxLen = 0){
         LinearTable<T> temp(maxLen);
         this->data = temp;
+    }
+
+    //拷贝构造函数
+    Queue(const Queue &another){
+        this->data = another.data;
     }
 
 public:
@@ -27,6 +30,10 @@ public:
         T temp = data.find(0);
         data.delByIndex(0);
         return temp;
+    }
+
+    bool inTable(T item){
+        return data.inTable(item);
     }
 
     //从队尾入队

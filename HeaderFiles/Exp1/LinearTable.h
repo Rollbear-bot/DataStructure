@@ -81,6 +81,13 @@ public:
         last++;
     }
 
+
+    //查找元素是否在表中
+    bool inTable(T item){
+        return locate(item) != -1;
+    }
+
+
     //下标方式删除元素
     void delByIndex(int index){
         for(int tra = index; tra < last; tra++){
