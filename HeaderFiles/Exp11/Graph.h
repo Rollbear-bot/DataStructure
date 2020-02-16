@@ -110,6 +110,7 @@ public:
 
 public:
     //添加结点（没有入度的孤立点）
+    //提供给类外添加节点的函数，避免在类内使用，可能会导致节点的序号错乱
     bool addNode(T value){
         this->NodeTable.append(GraphNode<T, E>(value, NodeTable.getLen()));
         return true;
@@ -196,7 +197,7 @@ public:
 
 
     //广度优先遍历：递归实现的封装
-    static List<T> recursionBFS(Graph<T, E> graph, int start){
+    static List<T> recursionBFS(Graph<T, E> graph, int start = 0){
         return BFS_recursion(graph,
                              *graph.getNode(start),
                              List<T>(),
@@ -205,16 +206,12 @@ public:
 
 
     //深度优先遍历：递归实现的封装
-    static List<T> recursionDFS(Graph<T, E> graph, int start){
+    static List<T> recursionDFS(Graph<T, E> graph, int start = 0){
         return DFS_recursion(graph,
                 *graph.getNode(start),
                 List<T>(),
                 new Stack<GraphNode<T, E>>(graph.numOfNode()));
     }
-
-
-
-
 
 
     //最小生成树：克鲁斯卡尔算法
@@ -245,9 +242,15 @@ public:
             result.append(curEdge);
             //将新的点加入生成树tree
             if(!mst.NodeTable.inList(*graph.getNode(curEdge.start)))
-                mst.addNode(graph.getElem(curEdge.start));
+                //mst.addNode(graph.getElem(curEdge.start)); //避免序号错乱
+                mst.NodeTable.append(
+                        GraphNode<T, E>(graph.getElem(curEdge.start),
+                                graph.getNode(curEdge.start)->index));
             if(!mst.NodeTable.inList(*graph.getNode(curEdge.dest)))
-                mst.addNode(graph.getElem(curEdge.dest));
+                //mst.addNode(graph.getElem(curEdge.dest)); //避免序号错乱
+                mst.NodeTable.append(
+                        GraphNode<T, E>(graph.getElem(curEdge.dest),
+                                graph.getNode(curEdge.dest)->index));
             //将新的边加入生成树
             mst.addEdge(curEdge);
         }
@@ -268,7 +271,7 @@ public:
 
         //所有节点都在结果集mst中时，算法结束
         while(mst.numOfNode() < graph.numOfNode()){
-            compare = List<Edge<T, E>*>();
+            compare = List<Edge<T, E>*>(); //初始化
             //取出所有从“结果点集”中的节点出发的边
             for(int i = 0, index; i < mst.NodeTable.getLen(); i++){
                 index = mst.getNode(i)->index;
@@ -287,7 +290,10 @@ public:
             //将边按权值从小到大排序，取出权值最小的边，将该边、该边上的点加入结果集
             compare.insertSort();
             miniEdge = compare.quit();
-            mst.addNode(graph.getElem(miniEdge->dest));
+
+            //mst.addNode(graph.getElem(miniEdge->dest)); //不能重新编写序号，会出现边连接错误
+            mst.NodeTable.append(GraphNode<T, E>(graph.getElem(miniEdge->dest),
+                    graph.getNode(miniEdge->dest)->index));
             mst.addEdge(*miniEdge);
         } //end while
 
@@ -320,11 +326,21 @@ public:
     //打印所有边
     void printAllEdges() const {
         Edge<T, E> curEdge;
+        List<Edge<T, E>> edges;
         for(int index = 0; index < numOfNode(); index++){
             for(int i = 0; i < NodeTable.getElem(index).EdgeTable.getLen(); i++){
                 curEdge = NodeTable.getElem(index).EdgeTable.getElem(i);
-                cout << "(" << curEdge.start << ", " << curEdge.dest << ") ";
+                if(edges.inList(Edge<T, E>(curEdge.start, curEdge.dest, curEdge.cost))
+                || edges.inList(Edge<T, E>(curEdge.dest, curEdge.start, curEdge.cost)))
+                    continue;
+                edges.append(curEdge);
             }
+        }
+
+        for(int index = 0; index < edges.getLen(); index++){
+            curEdge = edges.getElem(index);
+            cout << "(" << NodeTable.getElem(curEdge.start).value << ", "
+                 << NodeTable.getElem(curEdge.dest).value << ") ";
         }
         cout << endl;
     }
