@@ -50,6 +50,13 @@ public:
         return true;
     }
 
+
+    //下标运算符重载
+    T &operator [](int index){
+        return (find(index)->data);
+    }
+
+
     //在构造函数中建表
     List(int len = 0){
         this->len = len;
