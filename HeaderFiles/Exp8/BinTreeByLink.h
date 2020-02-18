@@ -51,7 +51,7 @@ public:
 
     //构造函数：从一个代表广义表的字符串中构造
     BinTreeByLink(const string& gt){
-        this->root = BuildByGeneralizedTable(gt);
+        this->root = BuildByGeneralizedTable<BinTreeNode<T>>(gt);
     }
 
 
@@ -153,9 +153,11 @@ public:
 
 
     //中序遍历递归的封装：返回链表
+    //为了方便线索化的复用，修改为函数模板
+    template <class NodeType>
     List<T> inOrderTraversal() const {
         List<T> result(0);
-        inOrderRecursion(root, result);
+        inOrderRecursion<NodeType>(root, result);
         return result;
     }
 
@@ -231,13 +233,14 @@ protected:
      * 遇到数据值时，初始化指针指向的节点
      * 遇到逗号时，创建当前位置的兄弟节点，并将指针移到那里
      */
-    static BinTreeNode<T> *BuildByGeneralizedTable(string gt, T nullValue = '#'){
+    template <class NodeType>
+    static NodeType *BuildByGeneralizedTable(string gt, T nullValue = '#'){
         int charIndex = 0;
         char currentChar = gt[charIndex];
         //todo::需要添加从char类型转化为T类型的方法
         //初始化根节点
-        auto *r = new BinTreeNode<T>(T(currentChar));
-        BinTreeNode<T> *currentNode = r;
+        auto *r = new NodeType(T(currentChar));
+        NodeType *currentNode = r;
 
         do{
             charIndex++;
@@ -247,10 +250,11 @@ protected:
                 case '(':
                     //检测左孩子是否已经存在
                     if(currentNode->leftChild != nullptr &&
-                        currentNode->leftChild->value != nullValue) throw Ex("不合理的广义表！");
+                        currentNode->leftChild->value != nullValue)
+                            throw Ex("不合理的广义表！");
                     //新建一个数据值为空的左孩子节点，并将指针移到那里
                     currentNode->leftChild =
-                            new BinTreeNode<T>(nullValue, nullptr, nullptr, currentNode);
+                            new NodeType(nullValue, nullptr, nullptr, currentNode);
                     currentNode = currentNode->leftChild;
                     break;
                 case ')':
@@ -261,11 +265,15 @@ protected:
                 case ',':
                     //检测兄弟节点是否已经存在
                     if(currentNode->parent->rightChild != nullptr &&
-                         currentNode->parent->rightChild->value != nullValue) throw Ex("不合理的广义表！");
+                         currentNode->parent->rightChild->value != nullValue)
+                            throw Ex("不合理的广义表！");
                     //创建兄弟节点并将指针移动到那里
                     if(currentNode->parent == nullptr) throw NullPointer();
                     currentNode->parent->rightChild =
-                            new BinTreeNode<T>(nullValue, nullptr, nullptr, currentNode->parent);
+                            new NodeType(nullValue,
+                                nullptr,
+                                nullptr,
+                                currentNode->parent);
                     currentNode = currentNode->parent->rightChild;
                     break;
                 default:
@@ -276,7 +284,7 @@ protected:
                     break;
             } //end switch
         } while(currentChar != '\0');
-        refresh(r); //标准化（删除所有无用节点）
+        refresh<NodeType>(r); //标准化（删除所有无用节点）
         return r;
     }
 
@@ -341,7 +349,7 @@ protected:
                 p->value = value;
             }
         } //end while
-        refresh(r); //标准化（删除所有无用节点）
+        refresh<BinTreeNode<T>>(r); //标准化（删除所有无用节点）
         return r;
     }
 
@@ -369,9 +377,10 @@ protected:
             queue.enter(currentNode->leftChild);
             queue.enter(currentNode->rightChild);
         }//end while
-        refresh(r); //标准化（删除所有无用节点）
+        refresh<BinTreeNode<T>>(r); //标准化（删除所有无用节点）
         return r;
     }
+
 
     //递归前序遍历
     void preOrderRecursion(BinTreeNode<T> *currentNode, List<T> &result, T nullValue = '#') const {
@@ -384,12 +393,13 @@ protected:
 
 
     //递归中序遍历
-    void inOrderRecursion(BinTreeNode<T> *currentNode, List<T> &result, T nullValue = '#') const {
+    template <class NodeType>
+    static void inOrderRecursion(NodeType *currentNode, List<T> &result, T nullValue = '#'){
         if(currentNode == nullptr || currentNode->value == nullValue)
             return; //递归出口
-        inOrderRecursion(currentNode->leftChild, result); //访问左孩子
+        inOrderRecursion<NodeType>(currentNode->leftChild, result); //访问左孩子
         result.append(currentNode->value); //访问根节点
-        inOrderRecursion(currentNode->rightChild, result); //访问右孩子
+        inOrderRecursion<NodeType>(currentNode->rightChild, result); //访问右孩子
     }
 
 
@@ -479,7 +489,8 @@ protected:
 
 
     //删除某个节点以及它的所有子节点
-    static void remove(BinTreeNode<T> *node, T nullValue = '#'){
+    template <class NodeType>
+    static void remove(NodeType *node, T nullValue = '#'){
         if(node == nullptr) return;
 
         //如果左孩子存在，删除左孩子
@@ -489,7 +500,7 @@ protected:
         if(node->rightChild != nullptr && node->rightChild->value != nullValue)
             remove(node->rightChild);
         //删除自己
-        BinTreeNode<T> *tmp = node;
+        NodeType *tmp = node;
         bool nodeIsTheLeft;
         if(node->parent != nullptr){
             //判断目标节点是父节点的左孩子还是右孩子
@@ -503,15 +514,16 @@ protected:
 
 
     //删除所有无用节点（即值为nullValue的节点）
-    static void refresh(BinTreeNode<T> *currentNode, T nullValue = '#'){
+    template <class NodeType>
+    static void refresh(NodeType *currentNode, T nullValue = '#'){
         if(currentNode == nullptr)
             return;
         if(currentNode->value == nullValue){
             remove(currentNode); //去除值为nullValue的节点
             return;
         }
-        refresh(currentNode->leftChild);
-        refresh(currentNode->rightChild);
+        refresh<NodeType>(currentNode->leftChild);
+        refresh<NodeType>(currentNode->rightChild);
     }
 
 
