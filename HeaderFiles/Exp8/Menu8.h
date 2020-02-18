@@ -96,7 +96,7 @@ public:
         List<char> outputList;
 
 
-        BinTreeByLink<char> bt("#", '#');
+        BinTreeByLink<char> bt;
         cout << "0: 通过广义表建立二叉树 1:交互式建立二叉树" << endl;
         cin >> choice;
         if(choice){
@@ -104,7 +104,7 @@ public:
         } else {
             cout << "请输入广义表：" << endl;
             cin >> GTable;
-            bt = BinTreeByLink<char>(GTable, '#');
+            bt = BinTreeByLink<char>(GTable);
         }
 
         cout << "二叉树建立成功！" << endl;

@@ -42,28 +42,29 @@ struct BinTreeNode{
 //二叉树模板的定义
 template <class T>
 class BinTreeByLink{
+    template <class E>
+    friend class ThreadTree;
 public:
     //无参构造
-    BinTreeByLink(){}
+    //BinTreeByLink(){}
 
 
     //构造函数：从一个代表广义表的字符串中构造
-    BinTreeByLink(const string& gt, T nullValue){
-        this->nullValue = nullValue;
+    BinTreeByLink(const string& gt){
         this->root = BuildByGeneralizedTable(gt);
     }
 
 
     //构造函数：交互式建立
-    BinTreeByLink(T nullValue){
-        this->nullValue = nullValue;
-        this->root = BuildInteractive();
+    BinTreeByLink(bool interactive = false){
+        if(interactive)
+            this->root = BuildInteractive();
     }
 
 
     //拷贝构造函数
     BinTreeByLink(const BinTreeByLink<T> &another){
-        this->nullValue = another.nullValue;
+        //this->nullValue = another.nullValue;
         List<T> tmp(another.layerTraversalWithoutRecursion());
         this->root = BuildByLayerTraversalList(tmp);
     }
@@ -77,7 +78,7 @@ public:
 
     //赋值运算符重载
     BinTreeByLink<T> operator =(const BinTreeByLink<T> &operand) {
-        this->nullValue = operand.nullValue;
+        //this->nullValue = operand.nullValue;
         this->root = BuildByLayerTraversalList(
                 operand.layerTraversalWithoutRecursion());
         return *this;
@@ -124,7 +125,7 @@ public:
 
     //根据层次序序号获取某个位置的节点的数据值
     //序号从1开始（根节点的序号是1）
-    T getNodeValue(int index) const {
+    T getNodeValue(int index, T nullValue = '#') const {
         BinTreeNode<T> *currentNode = getNode(index);
         return currentNode == nullptr? nullValue: currentNode->value;
     }
@@ -168,7 +169,7 @@ public:
 
 
     //非递归层次序遍历：使用队列
-    List<T> layerTraversalWithoutRecursion() const {
+    List<T> layerTraversalWithoutRecursion(T nullValue = '#') const {
         Queue<BinTreeNode<T>*> queue(pow(2, height()) - 1); //建立队列
         List<T> result;
         BinTreeNode<T> *currentNode;
@@ -196,7 +197,7 @@ public:
 
 
     //非递归前序遍历
-    List<T> preOrderTraversalWithoutRecursion() const {
+    List<T> preOrderTraversalWithoutRecursion(T nullValue = '#') const {
         List<T> result(0);
         Stack<BinTreeNode<T>*> stack(20);
         BinTreeNode<T> *currentNode;
@@ -219,7 +220,7 @@ public:
 
 protected:
     BinTreeNode<T> *root; //根节点
-    T nullValue; //代表空位置的值
+    //T nullValue; //代表空位置的值
 
 
     /*
@@ -230,7 +231,7 @@ protected:
      * 遇到数据值时，初始化指针指向的节点
      * 遇到逗号时，创建当前位置的兄弟节点，并将指针移到那里
      */
-    BinTreeNode<T> *BuildByGeneralizedTable(string gt){
+    static BinTreeNode<T> *BuildByGeneralizedTable(string gt, T nullValue = '#'){
         int charIndex = 0;
         char currentChar = gt[charIndex];
         //todo::需要添加从char类型转化为T类型的方法
@@ -287,7 +288,7 @@ protected:
      * todo::输入无效指令时应该提示，并要求重新输入
      * todo::节点覆盖时出错
      */
-    BinTreeNode<T> *BuildInteractive(){
+    BinTreeNode<T> *BuildInteractive(T nullValue = '#'){
         int choice = 1;
         T value;
         string exceptionInfo = "该节点已存在：";
@@ -373,7 +374,7 @@ protected:
     }
 
     //递归前序遍历
-    void preOrderRecursion(BinTreeNode<T> *currentNode, List<T> &result) const {
+    void preOrderRecursion(BinTreeNode<T> *currentNode, List<T> &result, T nullValue = '#') const {
         if(currentNode == nullptr || currentNode->value == nullValue)
             return; //递归出口
         result.append(currentNode->value); //将当前节点的数据值附加到结果链表
@@ -383,7 +384,7 @@ protected:
 
 
     //递归中序遍历
-    void inOrderRecursion(BinTreeNode<T> *currentNode, List<T> &result) const {
+    void inOrderRecursion(BinTreeNode<T> *currentNode, List<T> &result, T nullValue = '#') const {
         if(currentNode == nullptr || currentNode->value == nullValue)
             return; //递归出口
         inOrderRecursion(currentNode->leftChild, result); //访问左孩子
@@ -393,7 +394,7 @@ protected:
 
 
     //递归后序遍历
-    void postOrderRecursion(BinTreeNode<T> *currentNode, List<T> &result) const {
+    void postOrderRecursion(BinTreeNode<T> *currentNode, List<T> &result, T nullValue = '#') const {
         if(currentNode == nullptr || currentNode->value == nullValue)
             return; //递归出口
         postOrderRecursion(currentNode->leftChild, result); //访问左孩子
@@ -423,7 +424,7 @@ protected:
 
     //根据节点的层次序序号，返回该节点（根节点的序号为1）
     //若不存在该序号的节点，返回空指针
-    BinTreeNode<T> *getNode(int index) const {
+    BinTreeNode<T> *getNode(int index, T nullValue = '#') const {
         Stack<bool> goLeft = pathFromRoot(index);
 
         //栈构造完毕，开始访问
@@ -478,7 +479,7 @@ protected:
 
 
     //删除某个节点以及它的所有子节点
-    void remove(BinTreeNode<T> *node){
+    static void remove(BinTreeNode<T> *node, T nullValue = '#'){
         if(node == nullptr) return;
 
         //如果左孩子存在，删除左孩子
@@ -502,7 +503,7 @@ protected:
 
 
     //删除所有无用节点（即值为nullValue的节点）
-    void refresh(BinTreeNode<T> *currentNode){
+    static void refresh(BinTreeNode<T> *currentNode, T nullValue = '#'){
         if(currentNode == nullptr)
             return;
         if(currentNode->value == nullValue){
