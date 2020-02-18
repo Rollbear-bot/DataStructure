@@ -148,7 +148,7 @@ public:
 
                 case 3:
                     UiCollection::printLine();
-                    outputList = bt.inOrderTraversal();
+                    outputList = bt.inOrderTraversal<BinTreeNode<char>>();
                     cout << "中序遍历输出为：" << endl;
                     outputList.printList();
                     UiCollection::pause();
