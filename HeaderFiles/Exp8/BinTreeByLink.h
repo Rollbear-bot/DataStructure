@@ -220,9 +220,144 @@ public:
     }
 
 
+    //非递归中序遍历
+    List<T> inOrderTraversalWithoutRecursion(T nullValue = '#') const {
+        List<T> res;
+        Stack<BinTreeNode<T>*> stack;
+        BinTreeNode<T> *cur = root;
+        //先入栈一个标识栈底的元素
+        stack.push(new BinTreeNode<T>(nullValue));
+
+        //若某个节点有左子节点，则它入栈，指针移到它的左子节点
+        //若节点没有左子节点，则访问它，然后指针移到右子节点
+        //若节点是叶子节点，则访问它，然后从栈顶取出一个节点，重复直到栈空
+        //所有栈中的节点只在出栈时访问
+        do{
+            if(isLeaf(cur)) { //当前节点为叶子
+                res.append(cur->value);
+                while(true){
+                    cur = stack.pop();
+                    if(cur->value == nullValue) break; //到栈底了
+                    res.append(cur->value);
+                    if(cur->rightChild != nullptr){
+                        //从栈取出的节点不考虑左子节点，直接考虑右子节点
+                        cur = cur->rightChild;
+                        break;
+                    }
+                }//end while
+            }
+            else {
+                if(cur->leftChild != nullptr){
+                    //当前节点有左子节点
+                    stack.push(cur);
+                    cur = cur->leftChild;
+                } else {
+                    //当前节点没有左子节点
+                    res.append(cur->value);
+                    cur = cur->rightChild;
+                }
+            }
+        }while(!stack.isEmpty());
+        return res;
+    }
+
+
+    //非递归后序遍历
+    List<T> postOrderTraversalWithoutRecursion(T nullValue = '#') const {
+        List<T> res; //结果集
+        Stack<BinTreeNode<T>*> stack;
+        BinTreeNode<T> *cur = root;
+        //标记栈底
+        stack.push(new BinTreeNode<T>(nullValue));
+
+        //对于某个节点，若左子节点存在，则当前节点入栈，指针移到左子节点
+        //若左子节点不存在，则指针移到右子节点
+        do{
+            if(isLeaf(cur)){
+                //若当前节点是叶子，则访问它，并从栈顶取出下一个节点
+                res.append(cur->value);
+                while(true){
+                    cur = stack.pop();
+                    if(cur->value == nullValue) return res; //结束
+                    //出栈的节点不再检测左边分支，因为栈中的节点的左子节点一定已经检查过
+                    if(cur->rightChild != nullptr){
+                        cur = cur->rightChild;
+                        break;
+                    } else res.append(cur->value);
+                }//end while
+            }
+            if(cur->leftChild != nullptr){
+                //若左子节点存在
+                stack.push(cur);
+                cur = cur->leftChild;
+            } else {
+                //若左子节点不存在（右子节点存在）
+                cur = cur->rightChild;
+            }
+        }while(!stack.isEmpty());
+        return res;
+    }
+
+
+    /*
+     * 另一种非递归后序遍历的思路：
+     * 使用“栈的栈”，从根节点开始，不断往左子节点探测（但不访问），路过的节点入栈
+     * 直到到达一个没有左子节点的节点，开始出栈；
+     * 出栈并访问每个节点，并检查它是否有右子节点，若有则不访问它，并压回栈，将该栈封存；
+     * 新建一个栈，右子节点入栈，并将新栈压入“栈的栈”
+     * 循环直到所有栈空
+     */
+    List<T> postOrderTraversalWithoutRecursion2(T nullValue = '#') const {
+        List<T> res; //结果集
+        Stack<Stack<BinTreeNode<T>*>*> branches; //分支栈，存放所有分支
+        Stack<BinTreeNode<T>*> *mainBranch
+            = new Stack<BinTreeNode<T>*>; //包含根节点的主分支
+
+        BinTreeNode<T> *curNode = root; //标记当前节点
+        Stack<BinTreeNode<T>*> *curBranch = mainBranch; //标记当前分支
+        do{
+            curBranch->push(curNode); //经过的每个节点入栈
+            if(curNode->leftChild != nullptr){
+                //若左子节点存在，节点指针移到左子节点
+                curNode = curNode->leftChild;
+            } else {
+                //若左子节点不存在，开始释放该分支（出栈）
+                while(true){
+                    if(curBranch->isEmpty()){
+                        //如果该分支已空，跳出到上一个分支
+                        curBranch = branches.pop();
+                        //上一个分支栈顶的节点已经开启过分支，
+                        //所以该节点不能开启分支，直接访问
+                        curNode = curBranch->pop();
+                        res.append(curNode->value);
+                        //根节点是最后一个需要访问的节点，若根节点已经访问完毕，算法结束
+                        if(curNode == root) return res;
+                        else continue; //检查上一个分支是否空
+                    }
+                    else curNode = curBranch->pop(); //分支未空，取出分支顶的节点
+
+                    if(curNode->rightChild != nullptr){
+                        //若分支中的某个节点有右子节点，则不访问，将它压回栈
+                        curBranch->push(curNode);
+                        //当前分支压入分支栈待访问
+                        branches.push(curBranch);
+                        //建立新分支
+                        curBranch = new Stack<BinTreeNode<T>*>;
+                        //新分支从上一个节点的右子节点开始
+                        curNode = curNode->rightChild;
+                        break;
+                    }
+                    //在释放分支（出栈）的同时访问节点
+                    res.append(curNode->value);
+                }//end while
+            }
+        }while(curBranch==mainBranch || !branches.isEmpty());
+        return res; //函数正常运行时这里不是函数的出口
+    }
+
+
 protected:
     BinTreeNode<T> *root; //根节点
-    //T nullValue; //代表空位置的值
 
 
     /*
