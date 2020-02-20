@@ -35,10 +35,8 @@ public:
                     try {
                         lt.insert(index, value);
                         cout << "插入成功！" << endl;
-                    }catch(IndexOutException e){
-                        e.print();
-                    }catch (NoFound e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -51,10 +49,8 @@ public:
                     try {
                         lt.removeByIndex(index);
                         cout << "删除成功！" << endl;
-                    }catch (IndexOutException e){
-                        e.print();
-                    }catch (NoFound e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -67,10 +63,8 @@ public:
                     try {
                         cout << "该下标对应的元素值为：";
                         cout << lt.find(index)->data << endl;
-                    }catch (IndexOutException e){
-                        e.print();
-                    }catch (NoFound e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -80,8 +74,8 @@ public:
                     UiCollection::printLine();
                     try {
                         lt.printList();
-                    }catch (NullPointer e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();

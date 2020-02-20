@@ -53,10 +53,8 @@ private:
                     try {
                         st.push(value);
                         cout << "入栈成功！" << endl;
-                    }catch(IndexOutException e){
-                        e.print();
-                    }catch (OverFlowException e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -67,10 +65,8 @@ private:
                     try {
                         cout << "出栈的元素是：" << st.pop() << endl;
                         cout << "出栈成功！" << endl;
-                    }catch (IndexOutException e){
-                        e.print();
-                    }catch (NullPointer e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -81,8 +77,8 @@ private:
                     cout << "栈中的元素为：" << endl;
                     try {
                         st.printStack();
-                    }catch (NullPointer e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();

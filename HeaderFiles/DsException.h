@@ -7,10 +7,11 @@
 
 #include <iostream>
 #include <ctime>
+#include <exception>
 using namespace std;
 
 //其他异常
-class Ex{
+class Ex: public exception{
 public:
     Ex(){}
     Ex(string info): info(info){}
@@ -24,38 +25,58 @@ private:
 };
 
 //下标溢出异常
-class IndexOutException{
+class IndexOutException: public exception{
 public:
     IndexOutException(){}
+    /*
     void print(){
         cout << "IndexOutFlow!" << endl;
+    }
+     */
+    const char * what() const throw(){
+        return "IndexOutOfRange!";
     }
 };
 
 //NoFound异常
-class NoFound{
+class NoFound: public exception{
 public:
     NoFound(){}
+    /*
     void print(){
         cout << "NoFound!" << endl;
+    }
+     */
+    const char *what() const throw(){
+        return "NoFound!";
     }
 };
 
 //存储溢出异常
-class OverFlowException{
+class OverFlowException: public exception{
 public:
     OverFlowException(){}
+    /*
     void print(){
         cout << "OverFlow!" << endl;
+    }
+     */
+    const char *what() const throw(){
+        return "OverFlow!";
     }
 };
 
 //未初始化异常
-class NullPointer{
+class NullPointer: public exception{
 public:
     NullPointer(){}
+    /*
     void print(){
         cout << "NullPointer!" << endl;
+    }
+     */
+    const char *what() const throw(){
+        return "NullPointer!";
     }
 };
 

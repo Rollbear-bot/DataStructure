@@ -29,12 +29,8 @@ public:
                     try {
                         qe.enter(value);
                         cout << "入队成功！" << endl;
-                    }catch (IndexOutException e){
-                        e.print();
-                    }catch (OverFlowException e){
-                        e.print();
-                    }catch (NullPointer e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -45,10 +41,8 @@ public:
                     try {
                         cout << "出队的元素值为：" << qe.quit() << endl;
                         cout << "出队成功！" << endl;
-                    }catch (IndexOutException e){
-                        e.print();
-                    }catch (NullPointer e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();

@@ -18,7 +18,7 @@
 
 //系统信息
 #define author "Wu Junhong"
-#define Date "2019.11.11"
+#define Date "2020.02.20"
 
 #include <iostream>
 #include "UiCollection.h"

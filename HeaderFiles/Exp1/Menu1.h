@@ -50,10 +50,8 @@ public:
                     try {
                         lt.removeByIndex(index);
                         cout << "删除成功！" << endl;
-                    }catch (IndexOutException e){
-                        e.print();
-                    }catch (NullPointer e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -70,8 +68,8 @@ public:
                     try {
                         lt.find(tableIndex)->data.insert(index, value);
                         cout << "插入成功！" << endl;
-                    } catch (IndexOutException e) {
-                        e.print();
+                    } catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -85,8 +83,8 @@ public:
                     try {
                         lt.find(tableIndex)->data.delByIndex(index);
                         cout << "删除成功！" << endl;
-                    } catch (IndexOutException e) {
-                        e.print();
+                    } catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -108,12 +106,8 @@ public:
                         for(tableIndex = 0; tableIndex < lt.getLen(); tableIndex++){
                             lt.find(tableIndex)->data.printTable();
                         }
-                    }catch (IndexOutException e){
-                        e.print();
-                    }catch (OverFlowException e){
-                        e.print();
-                    }catch (NullPointer e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();

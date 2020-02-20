@@ -41,10 +41,8 @@ public:
                             cout << index << ":";
                             lt.find(index)->data.printString();
                         }
-                    }catch(NullPointer e){
-                        e.print();
-                    }catch(IndexOutException e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -60,12 +58,8 @@ public:
                         temp = lt.find(index)->data.append(lt.find(index2)->data);
                         lt.append(temp);
                         cout << "产生的新串已添加！" << endl;
-                    }catch (IndexOutException e){
-                        e.print();
-                    }catch (OverFlowException e){
-                        e.print();
-                    }catch (NullPointer e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -80,12 +74,8 @@ public:
                     try {
                         lt.find(index)->data.rewrite(len);
                         cout << "修改完成！" << endl;
-                    }catch(IndexOutException e){
-                        e.print();
-                    }catch (OverFlowException e){
-                        e.print();
-                    }catch (NullPointer e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -98,12 +88,8 @@ public:
                     try {
                         lt.removeByIndex(index);
                         cout << "删除成功！" << endl;
-                    }catch(IndexOutException e){
-                        e.print();
-                    }catch(OverFlowException e){
-                        e.print();
-                    }catch(NullPointer e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -118,12 +104,8 @@ public:
                         matchIndex = lt.find(index)->data.match(lt.find(index2)->data);
                         if(matchIndex==-1)cout << "匹配失败！" << endl;
                         else cout << "匹配成功！匹配位置为：" << matchIndex << endl;
-                    }catch (IndexOutException e){
-                        e.print();
-                    }catch (OverFlowException e){
-                        e.print();
-                    }catch (NullPointer e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();

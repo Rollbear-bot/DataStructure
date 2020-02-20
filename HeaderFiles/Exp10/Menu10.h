@@ -36,8 +36,8 @@ public:
                     try {
                         index = sst.binarySearch(value);
                         cout << "查找成功！所查找的元素位于索引" << index << endl;
-                    }catch(NoFound e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -48,8 +48,8 @@ public:
                     cin >> value;
                     try {
                         index = sst.orderSearch(value);
-                    }catch(NoFound e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();

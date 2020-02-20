@@ -127,10 +127,8 @@ public:
                         outputList = bt.layerTraversalWithoutRecursion();
                         cout << "层次序输出为：" << endl;
                         outputList.printList();
-                    }catch (IndexOutException e){
-                        e.print();
-                    }catch (NullPointer e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -171,8 +169,8 @@ public:
                     try {
                         bt.removeByIndex(index);
                         cout << "删除成功！" << endl;
-                    }catch (IndexOutException e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();

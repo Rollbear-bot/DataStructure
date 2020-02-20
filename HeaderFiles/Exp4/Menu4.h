@@ -68,10 +68,8 @@ protected:
                     try{
                         pl.alter(index, value);
                         cout << "ÐÞ¸Ä³É¹¦£¡" << endl;
-                    }catch(IndexOutException e){
-                        e.print();
-                    }catch (OverFlowException e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -81,12 +79,8 @@ protected:
                     UiCollection::printLine();
                     try {
                         pl.printPoly();
-                    }catch (IndexOutException e){
-                        e.print();
-                    }catch (OverFlowException e){
-                        e.print();
-                    }catch (NullPointer e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -96,12 +90,8 @@ protected:
                     UiCollection::printLine();
                     try {
                         calculate<T>(pl);
-                    }catch(IndexOutException e){
-                        e.print();
-                    }catch (OverFlowException e){
-                        e.print();
-                    }catch (NullPointer e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     break;
 

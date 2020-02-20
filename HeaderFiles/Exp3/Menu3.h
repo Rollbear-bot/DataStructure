@@ -58,8 +58,8 @@ private:
                     try {
                         lt.insert(index, value);
                         cout << "插入成功！" << endl;
-                    }catch(IndexOutException e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -72,10 +72,8 @@ private:
                     try {
                         lt.delByIndex(index);
                         cout << "删除成功！" << endl;
-                    }catch(IndexOutException e){
-                        e.print();
-                    }catch (NullPointer e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -97,8 +95,8 @@ private:
                     try {
                         lt.alter(index, value);
                         cout << "修改成功！" << endl;
-                    }catch(IndexOutException e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
@@ -110,8 +108,8 @@ private:
                     UiCollection::printLine();
                     try {
                         cout << "该下标对应的结点的值为：" << lt.find(index)->data << endl;
-                    }catch (IndexOutException e){
-                        e.print();
+                    }catch (exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
