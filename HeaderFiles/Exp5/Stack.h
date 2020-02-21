@@ -12,11 +12,8 @@ using namespace std;
 template <class T>
 class Stack{
 public:
-    //无参的构造函数
-    Stack(){ Stack(0);}
-
     //指定栈深来构造
-    Stack(int maxLen){
+    Stack(int maxLen = MaxLen-1){
         LinearTable<T> temp(maxLen);
         this->data = temp;
     }
@@ -29,8 +26,8 @@ public:
 public:
     //出栈
     T pop(){
-        T tmp = data.find(data.getLast() - 1);
-        data.delByIndex(data.getLast() - 1);
+        T tmp = data.find(data.length() - 1);
+        data.delByIndex(data.length() - 1);
         return tmp;
     }
 
@@ -61,7 +58,7 @@ public:
     int getMaxLen(){ return data.getMax();}
 
     //获取当前栈中元素个数
-    int getEleNum(){ return data.getLast();}
+    int getEleNum(){ return data.length();}
 
     //将栈中的元素序列输出为链表
     List<T> toList(){

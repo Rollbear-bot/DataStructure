@@ -32,7 +32,7 @@ public:
                 data.append(*str);
                 str++;
             }
-            this->len = data.getLen();
+            this->len = data.length();
         }
     }
 

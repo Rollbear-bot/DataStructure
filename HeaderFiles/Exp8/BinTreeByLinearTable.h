@@ -59,7 +59,7 @@ public: //以下为公有接口
     //层次序遍历：返回一个存放层次序遍历元素序列的链表
     List<T> &levelVisit(){
         List<T> sln(0);
-        for(int index = 0; index < table.getLast(); index++){
+        for(int index = 0; index < table.length(); index++){
             sln.append(table.find(index));
         }
         return sln;
@@ -125,13 +125,13 @@ public: //以下为公有接口
     }
 
     //二叉树的结点个数
-    int size(){ return table.getLast();}
+    int size(){ return table.length();}
 
 protected: //以下为类内调用的类内功能接口
     //类内方法：从单链表建立二叉树，在构造函数中调用
     void build(List<T> lt){
         this->table = LinearTable<T>(49);
-        for(int index = 0; index < lt.getLen(); index++){
+        for(int index = 0; index < lt.length(); index++){
             table.alter(index, lt.find(index)->data);
         }
     }
@@ -139,7 +139,7 @@ protected: //以下为类内调用的类内功能接口
     //类内方法：判断某个索引的结点是否存在
     bool realIndex(int index){
         //这两条语句不能放在一个或语句中判断，因为下标溢出的时候find会抛出异常
-        if(index >= table.getLast()||index<0) return false;
+        if(index >= table.length() || index < 0) return false;
         return !(table.find(index) == NULL);
     }
 

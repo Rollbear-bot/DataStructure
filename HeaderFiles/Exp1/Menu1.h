@@ -103,7 +103,7 @@ public:
                     UiCollection::printLine();
                     cout << "所有已保存的表为：" << endl;
                     try {
-                        for(tableIndex = 0; tableIndex < lt.getLen(); tableIndex++){
+                        for(tableIndex = 0; tableIndex < lt.length(); tableIndex++){
                             lt.find(tableIndex)->data.printTable();
                         }
                     }catch (exception &e){

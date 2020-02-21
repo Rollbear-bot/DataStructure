@@ -43,9 +43,9 @@ public:
 
     //判等
     bool operator ==(const List<T> &another){
-        if(this->getLen() != another.getLen()) return false;
+        if(this->length() != another.length()) return false;
         bool equal = false;
-        for(int index = 0; index < this->getLen(); index++)
+        for(int index = 0; index < this->length(); index++)
             if(!(this->getElem(index) == another.getElem(index))) return false;
         return true;
     }
@@ -199,6 +199,16 @@ public:
         cout << endl;
     }
 
+    //切割为子表（获取两个索引中间的元素）
+    List<T> subList(const int left, const int right){
+        List<T> res;
+        if(left >= right) throw IndexOutException();
+        for(int index = left; index < right; index++){
+            res.append(this->getElem(index));
+        }
+        return res;
+    }
+
     //根据值返回第一个定位到的结点的下标值，未找到则返回-1
     int locate(T item) const {
         for(int index = 0; index < len; index++){
@@ -235,7 +245,7 @@ public:
 
     //表合并：将另一个表附加到当前表尾，函数返回新表
     static List<T> add(List<T> preList, List<T> postList){
-        ListNode<T> *cur = preList.preFind(preList.getLen());
+        ListNode<T> *cur = preList.preFind(preList.length());
         cur->next = postList.first->next;
         preList.len += postList.len;
         return preList;
@@ -272,9 +282,33 @@ public:
     }
 
 
+    //交换两个位置的值
+    void swap(int indexA, int indexB){
+        if(indexA >= len || indexB >= len
+        || indexA < 0 || indexB < 0) throw IndexOutException();
+        T tmp = getElem(indexA);
+        alter(indexA, getElem(indexB));
+        alter(indexB, tmp);
+    }
+
+
+    /**
+     * 生成一个随机数序列（用于测试排序）
+     * @param l 需要的序列长度
+     * @return 生成的序列
+     */
+    static List<int> randomIntegerList(int l){
+        List<int> res;
+        for(int count = 0; count < l; count++){
+            res.append(rand());
+        }
+        return res;
+    }
+
+
     ListNode<T> *getFirst(){return this->first;}
     ListNode<T> *getLast(){ return this->last;}
-    int getLen() const { return this->len;}
+    int length() const { return this->len;}
 
 protected:
     int len; //辅助计数

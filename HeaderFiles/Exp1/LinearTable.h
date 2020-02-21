@@ -20,6 +20,12 @@ using namespace std;
 template <class T>
 class LinearTable{
 public:
+    //下标运算符重载
+    T &operator[](int index){
+        return *find(index);
+    }
+
+
     //指定表长的构造函数
     LinearTable(int maxLen = MaxLen-1){
         if(maxLen >= MaxLen)throw OverFlowException();
@@ -41,8 +47,8 @@ public:
     //从单链表构造
     LinearTable(List<T> lt){
         //长度超过50时内存溢出
-        if(lt.getLen() > 50)throw OverFlowException();
-        this->max = lt.getLen();
+        if(lt.length() > 50)throw OverFlowException();
+        this->max = lt.length();
         //复制链表lt中的值到顺序表中
         for(int index = 0; index < max; index++){
             this->data[index] = lt.find(index)->data;
@@ -134,9 +140,9 @@ public:
         //新表的最大长度为两表最大长度之和
         LinearTable<T> sln(this->max + another.getMax());
         //复制表中元素值到新表
-        for(int index = 0; index < this->getLast() + another.getLast(); index++){
-            if(index < this->getLast()) sln.alter(index, this->data[index]);
-            else sln.alter(index, another.find(index - this->getLast()));
+        for(int index = 0; index < this->length() + another.length(); index++){
+            if(index < this->length()) sln.alter(index, this->data[index]);
+            else sln.alter(index, another.find(index - this->length()));
         }
         return sln;
     }
@@ -159,7 +165,7 @@ public:
 
     bool isEmpty() { return (last == 0);}
     bool isFull() { return (last == max);}
-    int getLast(){ return this->last;}
+    int length(){ return this->last;}
     int getMax(){ return this->max;}
 
 protected:

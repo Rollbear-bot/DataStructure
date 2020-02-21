@@ -99,7 +99,7 @@ public:
 
     //计算节点个数
     int numOfNodes() const {
-        return preOrderTraversalWithoutRecursion().getLen();
+        return preOrderTraversalWithoutRecursion().length();
     }
 
 
@@ -183,7 +183,7 @@ public:
         while(!queue.isEmpty()){
             currentNode = queue.quit();
             result.append(currentNode->value);
-            if(result.getLen() >= (pow(2, height()) - 1)) break;
+            if(result.length() >= (pow(2, height()) - 1)) break;
 
             //空白位置也要记录，否则不能体现出层次关系
             if(currentNode->leftChild == nullptr)
@@ -497,14 +497,14 @@ protected:
         BinTreeNode<T> *currentNode;
 
         //通过层次序遍历结果来构造
-        Queue<BinTreeNode<T>*> queue(layerList.getLen()); //建立队列
+        Queue<BinTreeNode<T>*> queue(layerList.length()); //建立队列
         queue.enter(r);
-        while(listIndex < layerList.getLen()){
+        while(listIndex < layerList.length()){
             currentNode = queue.quit();
             currentNode->leftChild =
                     new BinTreeNode<T>(layerList.getElem(++listIndex), nullptr, nullptr,
                                        currentNode);
-            if(listIndex >= layerList.getLen()) break;
+            if(listIndex >= layerList.length()) break;
 
             currentNode->rightChild =
                     new BinTreeNode<T>(layerList.getElem(++listIndex), nullptr, nullptr,

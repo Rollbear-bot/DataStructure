@@ -28,15 +28,15 @@ public:
 public:
     //进栈
     void push(T item){
-        if(data.getLen() + 1 > maxLen)throw OverFlowException();
+        if(data.length() + 1 > maxLen)throw OverFlowException();
         data.append(item);
     }
 
     //出栈，函数返回出栈元素的值
     T pop(){
         if(isEmpty())throw NullPointer();
-        T tmp = data.find(data.getLen()-1)->data;
-        data.removeByIndex(data.getLen() - 1);
+        T tmp = data.find(data.length() - 1)->data;
+        data.removeByIndex(data.length() - 1);
         return tmp;
     }
 
@@ -56,10 +56,10 @@ public:
     int getMaxLen(){ return maxLen;}
 
     //获取当前栈中元素个数
-    int getEleNum(){ return data.getLen();}
+    int getEleNum(){ return data.length();}
 
     //修改栈深
-    void alterMaxLen(int maxLen){ this->maxLen = maxLen;}
+    void alterMaxLen(int ml){ this->maxLen = ml;}
 
 protected:
     List<T> data;

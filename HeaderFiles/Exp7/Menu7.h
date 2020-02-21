@@ -37,7 +37,7 @@ public:
                     UiCollection::printLine();
                     cout << "ÒÑ±£´æµÄ´®£º" << endl;
                     try {
-                        for(int index = 0; index < lt.getLen(); index++){
+                        for(int index = 0; index < lt.length(); index++){
                             cout << index << ":";
                             lt.find(index)->data.printString();
                         }

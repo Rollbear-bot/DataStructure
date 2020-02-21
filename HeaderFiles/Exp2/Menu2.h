@@ -83,7 +83,7 @@ public:
 
                 case 5:
                     UiCollection::printLine();
-                    cout << "表长为：" << lt.getLen() << endl;
+                    cout << "表长为：" << lt.length() << endl;
                     UiCollection::pause();
                     UiCollection::clear();
                     break;
