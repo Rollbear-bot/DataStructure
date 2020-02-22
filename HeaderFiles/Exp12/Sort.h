@@ -6,6 +6,7 @@
 #define DATASTRUCTURE_SORT_H
 
 #include "../Exp2/List.h"
+#include "../Others/FromTextbook/MinHeap.h"
 
 /**
  * 排序算法的集合
@@ -15,7 +16,7 @@ template <class T>
 class Sort {
 public:
     /**
-     * 方法：希尔排序
+     * 希尔排序
      * 通过调用私有类方法来递归实现
      * 算法中缩小间隔（增量）的方式是gap = (gap/3)取整 + 1
      * @param lt 传入数据表
@@ -26,12 +27,30 @@ public:
 
 
     /**
-     * 方法：快速排序
+     * 快速排序
      * 通过调用私有方法来递归实现，调用私有方法来实现其中的“划分”功能
      * @param lt 传入数据表
      */
     static void quickSort(List<T> &lt){
         quickSortRecursion(lt, 0, lt.length());
+    }
+
+
+    /**
+     * 堆排序
+     * @param lt 传入数据表
+     */
+    static void heapSort(List<T> &lt){
+        List<T> res;
+        T tmp;
+        T *arr = new T;
+        lt.toArr(arr);
+        MinHeap<T> heap(arr, lt.length()); //建立最小堆
+        //从堆弹出的元素即为有序序列
+        while(heap.RemoveMin(tmp)){
+            res.append(tmp);
+        }
+        lt = res; //排序完成，传回序列
     }
 
 
@@ -43,12 +62,35 @@ public:
         int i, j, k;
         for(i = 0; i < lt.length() - 1; i++){
             k = i;
-            for(j = 0; j < lt.length(); j++)
+            for(j = i; j < lt.length(); j++)
                 if(lt[k] > lt[j]) k = j;
             //值交换
             lt.swap(i, k);
         }
     }
+
+
+    /**
+     * 二分插入排序
+     * @param 传入数据表
+     */
+     static void binaryInsertSort(List<T> &lt){
+         List<T> res; //结果集
+         T cur;
+         int start = 0, end = 1, mid = 0;
+         while(!lt.isEmpty()){
+             cur = lt.quit();
+             if(res.isEmpty()) {
+                 res.append(cur);
+             }
+             else {
+                 res.insert(cur);
+
+             }
+
+         }
+         lt = res; //将排序完毕的序列返回
+     }
 
 
     /**
@@ -76,6 +118,21 @@ public:
     }
 
 
+    /**
+     * 简单选择排序
+     * @param lt 传入数据表
+     */
+    static void selectionSort(List<T> &lt){
+        List<T> res;
+        T minItem;
+        while(!lt.isEmpty()){
+            minItem = selectionSort_findMinItem(lt); //找出序列中最小的元素
+            res.append(minItem); //将最小元素放入有序序列
+            lt.removeByValue(minItem); //从待排序列中把该元素移除
+        }
+        lt = res; //排序完毕
+    }
+
 private:
     /**
      * 递归实现希尔排序
@@ -83,8 +140,7 @@ private:
      * @param left 要排序区域的左边缘
      * @param right 要排序区域的右边缘
      */
-    static void shellSortRecursion(List<T> &lt,
-            const int left, const int right){
+    static void shellSortRecursion(List<T> &lt, const int left, const int right){
         int i, j, gap = right - left - 1; //增量的初始值
         T temp; //用于元素交换的额外空间
         do{
@@ -114,11 +170,10 @@ private:
      * @param left 待排序区域的左边界
      * @param right 待排序区域的右边界
      */
-    static void quickSortRecursion(List<T> &lt,
-            const int left, const int right){
+    static void quickSortRecursion(List<T> &lt, const int left, const int right){
         if(left < right){ //即仅当待排序序列长度大于一时才执行
             //划分，寻找基准元素
-            int pivotPos = quickSortPartition(lt, left, right);
+            int pivotPos = quickSort_partition(lt, left, right);
 
             //对基准左侧的序列施行快速排序
             quickSortRecursion(lt, left, pivotPos-1);
@@ -136,8 +191,7 @@ private:
      * @param high 待处理序列右边缘
      * @return 基准元素的下标
      */
-    static int quickSortPartition(List<T> lt,
-            const int low, const int high){
+    static int quickSort_partition(List<T> lt, const int low, const int high){
         int pivotPos = low;
         T pivot = lt.find(low); //基准元素
         for(int i = low + 1; i <= high; i++){ //检测整个序列，进行划分
@@ -186,6 +240,21 @@ private:
                 }
         }
         return merged;
+    }
+
+
+    /**
+     * 选择排序的子函数：找出序列中最小的元素
+     * @param lt 传入数据表
+     * @return 表中最小的元素
+     */
+    static T selectionSort_findMinItem(const List<T> &lt){
+        if(lt.length() <= 0)throw NullPointer();
+        T minItem = lt.getElem(0);
+        for(int index = 0; index < lt.length(); index++){
+            if(minItem > lt.getElem(index)) minItem = lt.getElem(index);
+        }
+        return minItem;
     }
 };
 
