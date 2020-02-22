@@ -11,13 +11,8 @@
 template <class T>
 class LinkedStack{
 public:
-    //默认构造函数
-    LinkedStack(){
-        LinkedStack(0);
-    }
-
     //给定栈深来构造
-    LinkedStack(int maxLen){
+    LinkedStack(int maxLen = MaxLen-1){
         //最大栈深为maxLen，栈空
         this->maxLen = maxLen;
         List<T> temp(0);
@@ -35,9 +30,10 @@ public:
     //出栈，函数返回出栈元素的值
     T pop(){
         if(isEmpty())throw NullPointer();
+        //先用一个空间暂存出栈的元素
         T tmp = data.find(data.length() - 1)->data;
-        data.removeByIndex(data.length() - 1);
-        return tmp;
+        data.removeByIndex(data.length() - 1); //释放空间
+        return tmp; //将出栈的元素返回
     }
 
     //判空
@@ -64,7 +60,7 @@ public:
 protected:
     List<T> data;
     int maxLen; //栈深
-    ListNode<T> *last; //指向栈顶的下一个位置（空位置），为结束标志
+    ListNode<T> *last; //指向栈顶的下一个位置（空位置），为序列结束标志
 };
 
 #endif //DATASTRUCTURE_LINKEDSTACK_H

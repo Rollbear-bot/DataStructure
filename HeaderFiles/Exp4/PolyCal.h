@@ -26,7 +26,7 @@ public:
 
     //输出所有已保存的多项式
     static void printPolys(){
-        for(int index = 0; index < last; int++){
+        for(int index = 0; index < last; index++){
             cout << index << ": ";
             data.find(index)->data.printPoly();
             cout << endl;

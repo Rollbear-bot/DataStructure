@@ -7,12 +7,13 @@
 #define DATASTRUCTURE_LINKEDQUEUE_H
 
 #include "../Exp2/List.h"
+#include "../Exp1/LinearTable.h"
 
 template <class T>
 class LinkedQueue{
 public:
     //给定最大队列长来构造
-    LinkedQueue(int maxLen){
+    LinkedQueue(int maxLen = MaxLen-1){
         this->maxLen = maxLen;
         //初始化时队列为空
         this->data = List<T>(0);
