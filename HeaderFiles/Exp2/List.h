@@ -127,6 +127,12 @@ public:
         this->last = flag;
     }
 
+
+    //析构函数
+    ~List(){
+        clear_recursion(first);
+    }
+
 public:
     //追加到链表尾
     void append(T item){
@@ -136,7 +142,8 @@ public:
             len++;
     }
 
-    //删除结点
+
+    //删除结点（根据下标来查找）
     void removeByIndex(int index){
         //flag指向要删除的结点的前一个结点
         ListNode<T> *flag = preFind(index);
@@ -148,6 +155,13 @@ public:
         delete temp;
         len--;
     }
+
+
+    //删除节点（根据元素值）
+    void removeByValue(T value){
+        removeByIndex(locate(value));
+    }
+
 
     //根据下标返回指向该节点的指针
     ListNode<T> *find(int index) const {
@@ -227,20 +241,15 @@ public:
         return len == 0;
     }
 
+
     //链表置空
-    //todo::不安全的算法：内存泄露
     void clear(){
-        //ListNode<T> *flag = find(1);
-        //ListNode<T> *preFlag = find(0);
-        last = find(0);
-        /*
-        while(flag != nullptr){
-            flag = flag->next;
-            preFlag = preFlag->next;
-            delete preFlag;
-        }
-         */
-        len = 0;
+        clear_recursion(first); //释放所有空间
+        //重新初始化
+        this->first = new ListNode<T>;
+        first->next = new ListNode<T>;
+        this->last = first->next;
+        this->len = 0;
     }
 
     //表合并：将另一个表附加到当前表尾，函数返回新表
@@ -293,7 +302,7 @@ public:
 
 
     /**
-     * 生成一个随机数序列（用于测试排序）
+     * 生成一个含n个随机数的序列（用于测试排序）
      * @param l 需要的序列长度
      * @return 生成的序列
      */
@@ -306,6 +315,36 @@ public:
     }
 
 
+    /**
+     * 检查序列是否有序
+     * @param 是否从大到小（默认从小到大）
+     * @return 布尔值
+     */
+    bool orderly(bool reverseOrder = false) const {
+        if(reverseOrder){
+            for(int index = 0; index < len-1; index++){
+                if(getElem(index) < getElem(index+1)) return false;
+            }
+        }
+        else {
+            for(int index = 0; index < len-1; index++){
+                if(getElem(index) > getElem(index+1)) return false;
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * 用链表中的元素生成一个数组
+     * todo::内存泄漏
+     */
+     void toArr(T *arr) const {
+         for(int index = 0; index < len; index++)
+             arr[index] = getElem(index);
+     }
+
+
     ListNode<T> *getFirst(){return this->first;}
     ListNode<T> *getLast(){ return this->last;}
     int length() const { return this->len;}
@@ -314,6 +353,16 @@ protected:
     int len; //辅助计数
     ListNode<T> *first; //first指向附加头节点，该节点不存放有效数据
     ListNode<T> *last; //last指向的结点不存放数据，仅为链表结束的标志
+
+
+    //递归删除该节点和其后继的所有节点
+    void clear_recursion(ListNode<T> *cur){
+        if(cur->next == nullptr) {
+            delete cur;
+            return; //递归出口
+        }
+        clear_recursion(cur->next);
+    }
 };
 
 #endif //DATASTRUCTURE_LIST_H
