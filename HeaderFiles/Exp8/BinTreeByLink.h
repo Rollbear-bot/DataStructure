@@ -64,7 +64,6 @@ public:
 
     //拷贝构造函数
     BinTreeByLink(const BinTreeByLink<T> &another){
-        //this->nullValue = another.nullValue;
         List<T> tmp(another.layerTraversalWithoutRecursion());
         this->root = BuildByLayerTraversalList(tmp);
     }
@@ -303,8 +302,8 @@ public:
      * 另一种非递归后序遍历的思路：
      * 使用“栈的栈”，从根节点开始，不断往左子节点探测（但不访问），路过的节点入栈
      * 直到到达一个没有左子节点的节点，开始出栈；
-     * 出栈并访问每个节点，并检查它是否有右子节点，若有则不访问它，并压回栈，将该栈封存；
-     * 新建一个栈，右子节点入栈，并将新栈压入“栈的栈”
+     * 出栈并访问每个节点，并检查它是否有右子节点，若有则不访问它，并压回栈，将该栈压入分支栈；
+     * 新建一个栈，右子节点入栈
      * 循环直到所有栈空
      */
     List<T> postOrderTraversalWithoutRecursion2(T nullValue = '#') const {
