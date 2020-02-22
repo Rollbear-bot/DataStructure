@@ -43,18 +43,6 @@ public:
         }
     }
 
-/*
-    //从单链表构造
-    LinearTable(List<T> lt){
-        //长度超过50时内存溢出
-        if(lt.length() > 50)throw OverFlowException();
-        this->max = lt.length();
-        //复制链表lt中的值到顺序表中
-        for(int index = 0; index < max; index++){
-            this->data[index] = lt.find(index)->data;
-        }
-    }
-    */
 
     //拷贝构造函数
     LinearTable(LinearTable& another){

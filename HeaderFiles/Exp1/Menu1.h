@@ -20,7 +20,6 @@ public:
         int lenOfTable, index, value, tableIndex, index2;
         LinearTable<int> temp;
         cout << "实验一" << endl << "建立线性表" << endl;
-        UiCollection::printLine();
         /*
         cout << "请输入表的长度：";
         cin >> lenOfTable;
@@ -37,6 +36,11 @@ public:
                     cin >> lenOfTable;
                     UiCollection::printLine();
                     temp = LinearTable<int>(lenOfTable);
+                    for(int i = 0; i < lenOfTable; i++){
+                        cout << "请输入第" << i+1 << "项元素：";
+                        cin >> value;
+                        temp.alter(i, value);
+                    }
                     lt.append(temp);
                     cout << "新建完成！" << endl;
                     UiCollection::pause();
@@ -114,25 +118,22 @@ public:
                     break;
 
                 case 7:
-                    /*
                     cout << "请输入要操作的线性表的序号：";
                     cin >> tableIndex;
                     cout << "请输入第一个表项的下标：";
                     cin >> index;
                     cout << "请输入第二个表项的下标：";
-                    cin >>index2;
+                    cin >> index2;
                     UiCollection::printLine();
                     try {
-                        lt.find(tableIndex)->data.swap(index, index2);
+                        lt[tableIndex].swap(index, index2);
                         cout << "交换成功！" << endl;
-                    }catch (IndexOutException e){
-                        e.print();
-                    }catch (NullPointer e){
-                        e.print();
+                    }catch(exception &e){
+                        cout << e.what() << endl;
                     }
                     UiCollection::pause();
                     UiCollection::clear();
-                    break;*/
+                    break;
 
                 default:
                     break;
