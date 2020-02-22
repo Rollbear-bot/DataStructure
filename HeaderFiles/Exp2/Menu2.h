@@ -21,8 +21,18 @@ public:
         cout << "请输入链表的长度：";
         cin >> lenOfList;
         List<int> lt(lenOfList);
+        for(int i = 0; i < lt.length(); i++){
+            cout << "请输入第" << i+1 << "个元素的值：";
+            cin >> value;
+            lt.alter(i, value);
+        }
 
-        string menuChoices[] = {"插入结点", "删除结点", "查找结点", "输出链表", "获取表长", "链表置空"};
+        string menuChoices[] = {"插入结点",
+                                "删除结点",
+                                "查找结点",
+                                "输出链表",
+                                "获取表长",
+                                "链表置空"};
         do{
             cmd = UiCollection::choices("false", 6, menuChoices, false);
             switch(cmd){
