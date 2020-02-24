@@ -8,6 +8,7 @@
 #include "../Exp2/List.h"
 #include "../Exp5/Stack.h"
 #include "../Exp6/Queue.h"
+#include "../Exp2/Set.h"
 
 //边的定义
 template <class T, class E>
@@ -39,16 +40,16 @@ struct Edge{
     }
 
     //赋值重载
-    Edge<T, E> operator =(const Edge<T, E> &operand){
+    Edge<T, E> &operator =(const Edge<T, E> operand){
         this->cost = operand.cost;
         this->start = operand.start;
         this->dest = operand.dest;
-        return Edge<T, E>(start, dest, cost);
+        return *this;
     }
 
-    int dest; //该边的终点（使用编号表示）
-    int start; //边的起点
-    E cost; //边上的权值
+    int dest = 0; //该边的终点（使用编号表示）
+    int start = 0; //边的起点
+    E cost = 0; //边上的权值
 
     //Edge<T, E> *nextEdge; //下一条边链，这里因为用了List结构来储存边，
     //因此就不需要next这个地址域了
@@ -84,12 +85,13 @@ public:
 template <class T, class E>
 class Graph{
 public:
-    //构造函数
-    Graph(){}
+    //构造函数：默认使用“#”代表无效的顶点
+    Graph(T nullValue = '#'): nullValue(nullValue){}
 
     //拷贝构造函数
     Graph(const Graph<T, E> &another){
         this->NodeTable = another.NodeTable;
+        this->nullValue = another.nullValue;
     }
 
     //析构函数
@@ -98,9 +100,10 @@ public:
     }
 
     //赋值运算符重载
-    Graph<T, E> operator =(const Graph<T, E> &operand){
+    Graph<T, E> &operator =(const Graph<T, E> operand){
         this->NodeTable = operand.NodeTable;
-        return Graph<T,E>(*this);
+        this->nullValue = operand.nullValue;
+        return *this;
     }
 
     //图判等
@@ -112,19 +115,31 @@ public:
     //添加结点（没有入度的孤立点）
     //提供给类外添加节点的函数，避免在类内使用，可能会导致节点的序号错乱
     bool addNode(T value){
-        this->NodeTable.append(GraphNode<T, E>(value, NodeTable.getLen()));
+        this->NodeTable.append(GraphNode<T, E>(value, NodeTable.length()));
         return true;
     }
 
 
     //在图中插入一条边
     bool addEdge(const Edge<T, E> &edge){
+
+        for(int index = 0; index < NodeTable.length(); index++){
+            //找到编号对应的顶点
+            if(NodeTable[index].index == edge.start)
+                {NodeTable[index].EdgeTable.append(
+                        Edge<T, E>(edge.start, edge.dest, edge.cost));}
+            if(NodeTable[index].index == edge.dest)
+                {NodeTable[index].EdgeTable.append(
+                        Edge<T, E>(edge.dest, edge.start, edge.cost));}
+        }
+        /*
         //将边链入A节点的边表
         NodeTable.find(edge.start)->data.EdgeTable.append(
                 Edge<T, E>(edge.start, edge.dest, edge.cost));
         //将边链入B节点的边表
         NodeTable.find(edge.dest)->data.EdgeTable.append(
                 Edge<T, E>(edge.dest, edge.start, edge.cost));
+                */
         return true;
     }
 
@@ -147,8 +162,8 @@ public:
 
                 //删除所有终点为currentNode的边,todo::效率很低，需要遍历所有边表
                 /*
-                for(int index = 0; index < graph.NodeTable.getLen(); index++){
-                    for(int i = 0; i < graph.getNode(index)->EdgeTable.getLen(); i++){
+                for(int index = 0; index < graph.NodeTable.length(); index++){
+                    for(int i = 0; i < graph.getNode(index)->EdgeTable.length(); i++){
                         if(graph.NodeTable.getElem(
                                 graph.getNode(index)->EdgeTable.getElem(i).dest)
                                 == *currentNode){
@@ -230,8 +245,8 @@ public:
         Edge<T, E> curEdge;
         Graph<T, E> mst;
         //开始构造生成树，每次从边表中取出权值最小的一条边，判断它是否是可用边，
-        //结果集中的边数到达顶点数-1时（二叉树的边数==结点数-1）停止
-        while (result.getLen() < maxEdges){
+        //结果集中的边数到达(顶点数-1)时（二叉树的边数==结点数-1）停止
+        while (result.length() < maxEdges){
             //从表edges首部取出一条边，并将它从表删除
             curEdge = edges.quit();
             //判断它是否是有效的边，非有效则跳过
@@ -265,22 +280,24 @@ public:
     //可以指定开始节点，不指定则从编号为0的节点开始
     static Graph<T, E> MST_Prim(const Graph<T, E> &graph, int start = 0){
         Graph<T, E> mst;
-        List<Edge<T, E>*> compare;
-        Edge<T, E> *miniEdge;
+        List<Edge<T, E>> compare; //compare中的类型从指针改为Edge实体，否则不能比较权值大小
+        Edge<T, E> miniEdge;
         mst.addNode(graph.getElem(start));
+        mst.NodeTable.append(*graph.getNode(start));
 
         //所有节点都在结果集mst中时，算法结束
         while(mst.numOfNode() < graph.numOfNode()){
-            compare = List<Edge<T, E>*>(); //初始化
+            compare = List<Edge<T, E>>(); //初始化
             //取出所有从“结果点集”中的节点出发的边
-            for(int i = 0, index; i < mst.NodeTable.getLen(); i++){
+            for(int i = 0, index; i < mst.NodeTable.length(); i++){
                 index = mst.getNode(i)->index;
-                compare = compare.add(compare, getEdges(graph, index));
+                compare = compare.add(compare, getEdges_entity(graph, index));
             }
             //如果存在某边的终点已经在结果集mst中，则将该边移除
-            for(int edgeIndex = 0; edgeIndex < compare.getLen(); edgeIndex++){
-                for(int nodeIndex = 0; nodeIndex < mst.NodeTable.getLen(); nodeIndex++){
-                    if(mst.getNode(nodeIndex)->index == compare.getElem(edgeIndex)->dest){
+            for(int edgeIndex = 0; edgeIndex < compare.length(); edgeIndex++){
+                for(int nodeIndex = 0; nodeIndex < mst.NodeTable.length(); nodeIndex++){
+                    if(mst.getNode(nodeIndex)->index
+                    == compare.getElem(edgeIndex).dest){
                         compare.removeByIndex(edgeIndex);
                         edgeIndex--; //链表中少了一个元素
                         break;
@@ -292,20 +309,103 @@ public:
             miniEdge = compare.quit();
 
             //mst.addNode(graph.getElem(miniEdge->dest)); //不能重新编写序号，会出现边连接错误
-            mst.NodeTable.append(GraphNode<T, E>(graph.getElem(miniEdge->dest),
-                    graph.getNode(miniEdge->dest)->index));
-            mst.addEdge(*miniEdge);
+            mst.NodeTable.append(GraphNode<T, E>(graph.getElem(miniEdge.dest),
+                    graph.getNode(miniEdge.dest)->index));
+            mst.addEdge(miniEdge);
         } //end while
-
         return mst;
+    }
+
+
+    //最短路径：Dijkstra算法
+    //open和closed表改为使用集合Set类型存储（不允许添加重复元素）
+    //函数返回一个表，表示起始点到i位置的最小距离是List[i]
+    List<E> shortestPath(int start) const {
+        List<E> cost(numOfNode());
+        Set<GraphNode<T, E>> open; //所有已生成而未考察的节点
+        Set<GraphNode<T, E>> closed; //所有已访问的节点
+        //从start节点开始
+        closed.append(*getNode(start));
+        cost.alter(start, 0);
+        //start节点的所有邻接点进入open
+        for(int index = 0; index < getNode(start)->EdgeTable.length(); index++)
+            open.append(
+                    *getNode(getNode(start)->EdgeTable.getElem(index).dest));
+
+        //List<Edge<T, E>> edges;
+        //Edge<T, E> curEdge, minEdge;
+        while(!open.isEmpty()){
+            /*
+            //获取所有从closed中的点出发的边
+            for(int index = 0; index < closed.getLen(); index++)
+                edges = getEdges_ptrOnly(*this, closed.getElem(index).index);
+            //去除终点也在closed中的部分
+            for(int index = 0; index < closed.length(); index++)
+                for(int edgeIndex = 0; edgeIndex < edges.length(); edgeIndex++)
+                    if(edges.getElem(edgeIndex).dest == getNode(index)->index)
+                        edges.removeByIndex(edgeIndex);
+            */
+
+            //在这里计算open中的节点的cost
+            Edge<T, E> tmpEdge;
+            GraphNode<T, E> tmpNode;
+            E curCost;
+            for(int index = 0; index < open.length(); index++){
+                tmpNode = open[index];
+                for(int edgeIndex = 0;
+                edgeIndex < tmpNode.EdgeTable.length();
+                edgeIndex++){
+                    //遍历open中的所有点涉及的所有边
+                    tmpEdge = tmpNode.EdgeTable[edgeIndex];
+                    //只有连接open和closed的点才考虑
+                    if(closed.inList(*getNode(tmpEdge.dest))){
+                        curCost = cost[tmpEdge.dest] + tmpEdge.cost;
+                        if(curCost < cost[tmpNode.index]){
+                            //只有当前的cost比表中的小才修改，保持cost最小值
+                            cost[tmpNode.index] = curCost;
+                        }
+                    }
+                }
+            }
+
+            /*
+            for(int nodeIndex = 0; nodeIndex < open.length(); nodeIndex++){
+                for(int edgeIndex = 0;
+                edgeIndex < open.getElem(nodeIndex).EdgeTable.length();
+                edgeIndex++){
+                    curEdge = open.getElem(nodeIndex).EdgeTable.getElem(edgeIndex);
+                    if(closed.inList(*getNode(curEdge.dest)))
+                        edges.append(curEdge);
+                }
+            }
+            edges.insertSort(); //由小到大排序
+            minEdge = edges.quit(); //取出连接最近点的边
+             */
+
+            //从open中找出cost最小的点
+            GraphNode<T, E> node = open[0];
+            for(int index = 0; index < open.length(); index++){
+                if(cost[open[index].index] < cost[node.index])
+                    node = open[index];
+            }
+            //点的所有临界点加入open
+            closed.append(node);
+            for(int index = 0;
+            index < node.EdgeTable.length();
+            index++){
+                //open会自动跳过重复的元素，因为它是一个集合
+                open.append(getElem(node.EdgeTable[index].dest));
+            }
+            //把加入了closed的点从open里移除
+            open.removeByIndex(open.locate(node));
+        }//end while
+        return cost;
     }
 
 
     //判断图中的两个点是否在同一个连通分量上
     static bool accessible(const Graph<T, E> &graph, int nodeA, int nodeB){
-        if(nodeA >= graph.NodeTable.getLen()
-        || nodeB >= graph.NodeTable.getLen())
-            return false;
+        //注意序号问题
         //通过广度遍历的结果来判断是否联通（不在遍历结果中即不可达）
         return BFS(graph, nodeA).inList(graph.getElem(nodeB));
     }
@@ -313,13 +413,15 @@ public:
 
     //节点个数
     int numOfNode() const {
-        return this->NodeTable.getLen();
+        return this->NodeTable.length();
     }
 
 
     //获取某个节点的数据值，序号为顶点表NodeTable中的序号
     T getElem(int index) const {
-        return NodeTable.getElem(index).value;
+        //return NodeTable.getElem(index).value;
+        //注意序号
+        return getNode(index)->value;
     }
 
 
@@ -327,9 +429,12 @@ public:
     void printAllEdges() const {
         Edge<T, E> curEdge;
         List<Edge<T, E>> edges;
-        for(int index = 0; index < numOfNode(); index++){
-            for(int i = 0; i < NodeTable.getElem(index).EdgeTable.getLen(); i++){
-                curEdge = NodeTable.getElem(index).EdgeTable.getElem(i);
+        int num = numOfNode();
+
+        //注意顶点的序号
+        for(int index = 0; index < num; index++){
+            for(int i = 0; i < getNode(index)->EdgeTable.length(); i++){
+                curEdge = getNode(index)->EdgeTable.getElem(i);
                 if(edges.inList(Edge<T, E>(curEdge.start, curEdge.dest, curEdge.cost))
                 || edges.inList(Edge<T, E>(curEdge.dest, curEdge.start, curEdge.cost)))
                     continue;
@@ -337,22 +442,41 @@ public:
             }
         }
 
-        for(int index = 0; index < edges.getLen(); index++){
+        for(int index = 0; index < edges.length(); index++){
             curEdge = edges.getElem(index);
-            cout << "(" << NodeTable.getElem(curEdge.start).value << ", "
-                 << NodeTable.getElem(curEdge.dest).value << ") ";
+            cout << "(" << getElem(curEdge.start) << ", "
+                 << getElem(curEdge.dest) << ") "
+                 << "cost = " << curEdge.cost << endl;
         }
         cout << endl;
     }
 
 
+    //打印所有顶点
+    void printAllNodes() const {
+        T value;
+        for(int index = 0; index  < NodeTable.length(); index++){
+            value = getElem(index);
+            if(value != nullValue)
+                cout << index << ": " << value << endl;
+        }
+    }
+
+
 protected:
     List<GraphNode<T, E>> NodeTable; //顶点表（邻接表）
-
+    T nullValue; //代表无效顶点的值
 
     //返回指向某个节点的指针
     GraphNode<T, E> *getNode(int index) const {
-        return &(this->NodeTable.find(index)->data);
+        //注意序号
+        for(int i = 0; i < NodeTable.length(); i++){
+            if(NodeTable.getElem(i).index == index)
+                return &(NodeTable.find(i)->data); //找到序号为index的顶点
+        }
+        //return &(this->NodeTable.find(index)->data);
+        //未找到
+        return new GraphNode<T, E>(nullValue, -1);
     }
 
 
@@ -361,14 +485,28 @@ protected:
     }
 
 
-    //查找从某个节点出发的所有边
-    static List<Edge<T, E>*> getEdges(Graph<T, E> graph, int start){
+    //查找从某个节点出发的所有边（返回指针集）
+    static List<Edge<T, E>*> getEdges_ptrOnly(Graph<T, E> graph, int start){
         Edge<T, E> *cur;
         List<Edge<T, E>*> res;
-        for(int index = 0; index < graph.NodeTable.getLen(); index++){
-            for(int i = 0; i < graph.getNode(index)->EdgeTable.getLen(); i++){
+        for(int index = 0; index < graph.NodeTable.length(); index++){
+            for(int i = 0; i < graph.getNode(index)->EdgeTable.length(); i++){
                 cur = &(graph.getNode(index)->EdgeTable.find(i)->data);
                 if(cur->start == start) res.append(cur);
+            }
+        }
+        return res;
+    }
+
+
+    //查找从某个节点出发的所有边（返回实体集）
+    static List<Edge<T, E>> getEdges_entity(Graph<T, E> graph, int start){
+        Edge<T, E> cur;
+        List<Edge<T, E>> res;
+        for(int index = 0; index < graph.NodeTable.length(); index++){
+            for(int i = 0; i < graph.getNode(index)->EdgeTable.length(); i++){
+                cur = graph.getNode(index)->EdgeTable.find(i)->data;
+                if(cur.start == start) res.append(cur);
             }
         }
         return res;
@@ -382,10 +520,10 @@ protected:
             Queue<GraphNode<T, E>> * const queue){
         //访问当前结点，然后从它出发的所有边的终点进入待访问队列，已访问过的节点除外
         res.append(curNode.value);
-        List<Edge<T, E>*> tmp = getEdges(graph, curNode.index);
+        List<Edge<T, E>*> tmp = getEdges_ptrOnly(graph, curNode.index);
 
         Edge<T, E> *curEdge;
-        for(int index = 0; index < tmp.getLen(); index++){
+        for(int index = 0; index < tmp.length(); index++){
             curEdge = tmp.getElem(index);
             if(res.inList(graph.getElem(curEdge->dest))
             || queue->inTable(*graph.getNode(curEdge->dest)))
@@ -409,11 +547,11 @@ protected:
         //访问当前节点
         res.append(curNode.value);
         //获取从当前节点出发的所有边
-        List<Edge<T, E>*> edges = graph.getEdges(graph, curNode.index);
+        List<Edge<T, E>*> edges = graph.getEdges_ptrOnly(graph, curNode.index);
 
         Edge<T, E> *curEdge;
         //遍历edges的所有边，移除那些终点已经访问过的
-        for(int index = 0; index < edges.getLen(); index++){
+        for(int index = 0; index < edges.length(); index++){
             curEdge = edges.getElem(index);
             if(res.inList(graph.getElem(curEdge->dest))
                || stack->inStack(*graph.getNode(curEdge->dest)))
