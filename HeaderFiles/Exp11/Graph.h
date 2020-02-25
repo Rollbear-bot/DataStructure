@@ -75,6 +75,10 @@ public:
         //节点相等不需要满足“与他们相连的边也一样”
     }
 
+    //比较编号的大小
+    bool operator <(const GraphNode<T, E> &a){return index<a.index;}
+    bool operator >(const GraphNode<T, E> &a){return index>a.index;}
+
     T value; //该顶点的数据
     List<Edge<T, E>> EdgeTable; //该顶点的链接边表
     int index = 0;
@@ -192,6 +196,7 @@ public:
         Queue<GraphNode<T, E>*> queue(2*graph.numOfNode());
         List<GraphNode<T, E>*> visited(graph.numOfNode()); //访问标记
         GraphNode<T, E> *current;
+        if(!graph.realNode(start)) return result; //若start不在图中，返回空表
         queue.enter(graph.getNode(start)); //从编号为start的节点开始访问
 
         do{
@@ -244,30 +249,31 @@ public:
         int maxEdges = graph.numOfNode()-1;
         Edge<T, E> curEdge;
         Graph<T, E> mst;
+        int maxLimb = graph.numOfNode()-1; //二叉树的边数等于节点数减一
         //开始构造生成树，每次从边表中取出权值最小的一条边，判断它是否是可用边，
         //结果集中的边数到达(顶点数-1)时（二叉树的边数==结点数-1）停止
-        while (result.length() < maxEdges){
+        while (result.length() < maxLimb){
             //从表edges首部取出一条边，并将它从表删除
             curEdge = edges.quit();
             //判断它是否是有效的边，非有效则跳过
-            if(!mst.isEmpty())
+            if(!mst.isEmpty()){
+                //若当前边的起点和终点联通，则跳过
                 if(accessible(mst, curEdge.start, curEdge.dest)
-                || (curEdge.start == curEdge.dest))
+                   || (curEdge.start == curEdge.dest))
                     continue;
-            result.append(curEdge);
+            }
             //将新的点加入生成树tree
             if(!mst.NodeTable.inList(*graph.getNode(curEdge.start)))
-                //mst.addNode(graph.getElem(curEdge.start)); //避免序号错乱
                 mst.NodeTable.append(
                         GraphNode<T, E>(graph.getElem(curEdge.start),
                                 graph.getNode(curEdge.start)->index));
             if(!mst.NodeTable.inList(*graph.getNode(curEdge.dest)))
-                //mst.addNode(graph.getElem(curEdge.dest)); //避免序号错乱
                 mst.NodeTable.append(
                         GraphNode<T, E>(graph.getElem(curEdge.dest),
                                 graph.getNode(curEdge.dest)->index));
             //将新的边加入生成树
             mst.addEdge(curEdge);
+            result.append(curEdge);
         }
 
         //todo::如何从一个具有二叉树特征的图建立二叉树的链接结构
@@ -282,24 +288,28 @@ public:
         Graph<T, E> mst;
         List<Edge<T, E>> compare; //compare中的类型从指针改为Edge实体，否则不能比较权值大小
         Edge<T, E> miniEdge;
-        mst.addNode(graph.getElem(start));
-        mst.NodeTable.append(*graph.getNode(start));
+        //这里不能使用addNode来添加顶点，会导致原图中顶点和生成树中的顶点序号不同，产生错乱
+        mst.NodeTable.append(GraphNode<T, E>(graph.getNode(start)->value, start));
 
         //所有节点都在结果集mst中时，算法结束
         while(mst.numOfNode() < graph.numOfNode()){
             compare = List<Edge<T, E>>(); //初始化
+
             //取出所有从“结果点集”中的节点出发的边
-            for(int i = 0, index; i < mst.NodeTable.length(); i++){
+            //这里需要注意索引i的取值范围，最大的编号值未必是NodeTable的长度
+            for(int i = 0, index; i <= mst.NodeTable.maxElem().index; i++){
+                if(!mst.realNode(i)) continue; //这个编号的顶点不存在，则跳过
                 index = mst.getNode(i)->index;
                 compare = compare.add(compare, getEdges_entity(graph, index));
             }
+
             //如果存在某边的终点已经在结果集mst中，则将该边移除
             for(int edgeIndex = 0; edgeIndex < compare.length(); edgeIndex++){
-                for(int nodeIndex = 0; nodeIndex < mst.NodeTable.length(); nodeIndex++){
-                    if(mst.getNode(nodeIndex)->index
-                    == compare.getElem(edgeIndex).dest){
+                for(int nodeIndex = 0; nodeIndex <= mst.NodeTable.maxElem().index; nodeIndex++){
+                    if(!mst.realNode(nodeIndex)) continue;
+                    if(nodeIndex == compare.getElem(edgeIndex).dest){
                         compare.removeByIndex(edgeIndex);
-                        edgeIndex--; //链表中少了一个元素
+                        edgeIndex--; //链表中少了一个元素，索引同步减一
                         break;
                     }
                 }
@@ -430,6 +440,7 @@ public:
         Edge<T, E> curEdge;
         List<Edge<T, E>> edges;
         int num = numOfNode();
+        E sum = 0;
 
         //注意顶点的序号
         for(int index = 0; index < num; index++){
@@ -447,8 +458,9 @@ public:
             cout << "(" << getElem(curEdge.start) << ", "
                  << getElem(curEdge.dest) << ") "
                  << "cost = " << curEdge.cost << endl;
+            sum += curEdge.cost;
         }
-        cout << endl;
+        cout << "sum of cost: " << sum << endl;
     }
 
 
@@ -482,6 +494,11 @@ protected:
 
     bool isEmpty(){
         return NodeTable.isEmpty();
+    }
+
+
+    bool realNode(int index){
+        return getNode(index)->value != nullValue;
     }
 
 
