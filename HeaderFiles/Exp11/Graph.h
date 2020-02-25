@@ -4,6 +4,8 @@
 #ifndef DATASTRUCTURE_GRAPH_H
 #define DATASTRUCTURE_GRAPH_H
 
+#define Infinity 2147483647
+
 #include "../Exp1/LinearTable.h"
 #include "../Exp2/List.h"
 #include "../Exp5/Stack.h"
@@ -126,24 +128,17 @@ public:
 
     //在图中插入一条边
     bool addEdge(const Edge<T, E> &edge){
-
         for(int index = 0; index < NodeTable.length(); index++){
             //找到编号对应的顶点
-            if(NodeTable[index].index == edge.start)
-                {NodeTable[index].EdgeTable.append(
-                        Edge<T, E>(edge.start, edge.dest, edge.cost));}
-            if(NodeTable[index].index == edge.dest)
-                {NodeTable[index].EdgeTable.append(
-                        Edge<T, E>(edge.dest, edge.start, edge.cost));}
+            if(NodeTable[index].index == edge.start){
+                NodeTable[index].EdgeTable.append(
+                        Edge<T, E>(edge.start, edge.dest, edge.cost));
+            }
+            if(NodeTable[index].index == edge.dest){
+                NodeTable[index].EdgeTable.append(
+                        Edge<T, E>(edge.dest, edge.start, edge.cost));
+            }
         }
-        /*
-        //将边链入A节点的边表
-        NodeTable.find(edge.start)->data.EdgeTable.append(
-                Edge<T, E>(edge.start, edge.dest, edge.cost));
-        //将边链入B节点的边表
-        NodeTable.find(edge.dest)->data.EdgeTable.append(
-                Edge<T, E>(edge.dest, edge.start, edge.cost));
-                */
         return true;
     }
 
@@ -277,7 +272,6 @@ public:
         }
 
         //todo::如何从一个具有二叉树特征的图建立二叉树的链接结构
-        //然后从结果边集构造二叉树
         return mst;
     }
 
@@ -332,6 +326,8 @@ public:
     //函数返回一个表，表示起始点到i位置的最小距离是List[i]
     List<E> shortestPath(int start) const {
         List<E> cost(numOfNode());
+        //cost数组的元素初始化为无穷大
+        for(int count = 0; count < cost.length(); count++) cost[count] = Infinity;
         Set<GraphNode<T, E>> open; //所有已生成而未考察的节点
         Set<GraphNode<T, E>> closed; //所有已访问的节点
         //从start节点开始
@@ -342,25 +338,13 @@ public:
             open.append(
                     *getNode(getNode(start)->EdgeTable.getElem(index).dest));
 
-        //List<Edge<T, E>> edges;
-        //Edge<T, E> curEdge, minEdge;
         while(!open.isEmpty()){
-            /*
-            //获取所有从closed中的点出发的边
-            for(int index = 0; index < closed.getLen(); index++)
-                edges = getEdges_ptrOnly(*this, closed.getElem(index).index);
-            //去除终点也在closed中的部分
-            for(int index = 0; index < closed.length(); index++)
-                for(int edgeIndex = 0; edgeIndex < edges.length(); edgeIndex++)
-                    if(edges.getElem(edgeIndex).dest == getNode(index)->index)
-                        edges.removeByIndex(edgeIndex);
-            */
-
             //在这里计算open中的节点的cost
             Edge<T, E> tmpEdge;
             GraphNode<T, E> tmpNode;
             E curCost;
             for(int index = 0; index < open.length(); index++){
+                //遍历open中的点
                 tmpNode = open[index];
                 for(int edgeIndex = 0;
                 edgeIndex < tmpNode.EdgeTable.length();
@@ -377,37 +361,27 @@ public:
                     }
                 }
             }
-
-            /*
-            for(int nodeIndex = 0; nodeIndex < open.length(); nodeIndex++){
-                for(int edgeIndex = 0;
-                edgeIndex < open.getElem(nodeIndex).EdgeTable.length();
-                edgeIndex++){
-                    curEdge = open.getElem(nodeIndex).EdgeTable.getElem(edgeIndex);
-                    if(closed.inList(*getNode(curEdge.dest)))
-                        edges.append(curEdge);
-                }
-            }
-            edges.insertSort(); //由小到大排序
-            minEdge = edges.quit(); //取出连接最近点的边
-             */
-
             //从open中找出cost最小的点
-            GraphNode<T, E> node = open[0];
+            GraphNode<T, E> closestNode = open[0];
             for(int index = 0; index < open.length(); index++){
-                if(cost[open[index].index] < cost[node.index])
-                    node = open[index];
+                //遍历open
+                if(cost[open[index].index] < cost[closestNode.index])
+                    closestNode = open[index];
             }
-            //点的所有临界点加入open
-            closed.append(node);
+
+            //被选中的点的所有临界点加入open，它自身加入close
+            closed.append(closestNode);
             for(int index = 0;
-            index < node.EdgeTable.length();
+                index < closestNode.EdgeTable.length();
             index++){
+                //已经在closed中的点不考虑
+                if(closed.inList(*getNode(closestNode.EdgeTable[index].dest)))
+                    continue;
                 //open会自动跳过重复的元素，因为它是一个集合
-                open.append(getElem(node.EdgeTable[index].dest));
+                open.append(*getNode(closestNode.EdgeTable[index].dest));
             }
             //把加入了closed的点从open里移除
-            open.removeByIndex(open.locate(node));
+            open.removeByIndex(open.locate(closestNode));
         }//end while
         return cost;
     }
