@@ -5,7 +5,7 @@
 #ifndef DATASTRUCTURE_MINHEAP_H
 #define DATASTRUCTURE_MINHEAP_H
 
-#define DefaultSize 10
+#define DefaultSize 50
 
 #include "../../Exp6/PQueue.h"
 #include<iostream>

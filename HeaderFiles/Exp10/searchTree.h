@@ -60,7 +60,7 @@ public:
         //cout << "建立完成！" << endl;
         //下面完成结点的顺序化，即从链表建立二叉树
         table.alter(0, lt.find(0)->data);
-        for(index = 1; index < lt.getLen(); index++){
+        for(index = 1; index < lt.length(); index++){
             if(table.find(index).getKey() <= table.find(getParent(index)).getKey()){
                 //如果结点的关键码小于它的父结点的关键码，它成为左子女
 
@@ -78,7 +78,7 @@ public:
     void sort(){
         List<T> sortedList = levelVisit();
         sortedList.insertSort();
-        int mid = sortedList.getLen()/2;
+        int mid = sortedList.length()/2;
         alter(0, sortedList.find(mid)->data);
 
     }

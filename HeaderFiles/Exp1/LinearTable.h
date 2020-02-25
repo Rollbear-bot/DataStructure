@@ -9,7 +9,7 @@
 #ifndef DATASTRUCTURE_LINEARTABLE_H
 #define DATASTRUCTURE_LINEARTABLE_H
 
-#define MaxLen 50
+#define MaxLen 100
 
 #include <iostream>
 #include "../DsException.h"

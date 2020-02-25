@@ -2,6 +2,8 @@
 // Created by 13592 on 2019/11/6.
 // 线索化二叉树，来自数据结构课本p212
 
+#if 0
+
 #ifndef DATASTRUCTURE_THREADEDBT_H
 #define DATASTRUCTURE_THREADEDBT_H
 
@@ -61,3 +63,5 @@ void ThreadedBT<T>::createInThread() {
 }
 
 #endif //DATASTRUCTURE_THREADEDBT_H
+
+#endif

@@ -11,6 +11,8 @@ iostream
 -
 ctime
 -
+exception
+-
 
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp1/LinearTable.h
 iostream
@@ -45,6 +47,20 @@ C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp2/List.h
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp5/Stack.h
 ../Exp6/Queue.h
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp6/Queue.h
+../Exp2/Set.h
+C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp2/Set.h
+
+C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp11/Menu11.h
+Graph.h
+C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp11/Graph.h
+../UiCollection.h
+C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/UiCollection.h
+
+C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp12/Sort.h
+../Exp2/List.h
+C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp2/List.h
+../Others/FromTextbook/MinHeap.h
+C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/MinHeap.h
 
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp2/List.h
 ../DsException.h
@@ -55,6 +71,10 @@ C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp2/Menu2.h
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/UiCollection.h
 ../DsException.h
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/DsException.h
+List.h
+C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp2/List.h
+
+C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp2/Set.h
 List.h
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp2/List.h
 
@@ -174,6 +194,10 @@ C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp8/BinTreeByLink.h
 
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp9/Menu9.h
 
+C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp9/ThreadTree.h
+../Exp8/BinTreeByLink.h
+C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp8/BinTreeByLink.h
+
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/BinaryTree.h
 ../../Exp5/Stack.h
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp5/Stack.h
@@ -202,10 +226,6 @@ C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Others/Heap.h
 iostream
 -
 
-C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Others/Sort.h
-../Exp1/LinearTable.h
-C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp1/LinearTable.h
-
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/TestSystem.h
 Exp1/Menu1.h
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp1/Menu1.h
@@ -227,6 +247,8 @@ Exp9/Menu9.h
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp9/Menu9.h
 Exp10/Menu10.h
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp10/Menu10.h
+Exp11/Menu11.h
+C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp11/Menu11.h
 iostream
 -
 UiCollection.h
@@ -241,18 +263,24 @@ C:/Users/13592/CLionProjects/DataStructure/SourceFiles/mainMenu.cpp
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/TestSystem.h
 
 C:/Users/13592/CLionProjects/DataStructure/SourceFiles/test.cpp
+ctime
+-
 ../HeaderFiles/TestSystem.h
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/TestSystem.h
 ../HeaderFiles/Others/HashTable.h
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Others/HashTable.h
 ../HeaderFiles/Others/FromTextbook/Graphmtx.h
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Others/FromTextbook/Graphmtx.h
-../HeaderFiles/Others/Sort.h
-C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Others/Sort.h
+../HeaderFiles/Exp12/Sort.h
+C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp12/Sort.h
 ../HeaderFiles/Others/Heap.h
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Others/Heap.h
 ../HeaderFiles/Exp8/BinTreeByLink.h
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp8/BinTreeByLink.h
 ../HeaderFiles/Exp11/Graph.h
 C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp11/Graph.h
+../HeaderFiles/Exp2/Set.h
+C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp2/Set.h
+../HeaderFiles/Exp9/ThreadTree.h
+C:/Users/13592/CLionProjects/DataStructure/HeaderFiles/Exp9/ThreadTree.h
 

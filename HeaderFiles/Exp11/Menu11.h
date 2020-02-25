@@ -22,6 +22,28 @@ public:
                             "最小生成树：Prim算法",
                             "最短路径：dijkstra算法"};
         Graph<char, int> graph, mst;
+
+        graph.addNode('A');//0
+        graph.addNode('B');//1
+        graph.addNode('C');//2
+        graph.addNode('D');//3
+        graph.addNode('E');//4
+        graph.addNode('F');//5
+        graph.addNode('G');//6
+        graph.addNode('H');//7
+        graph.addNode('I');//8
+        graph.addEdge(Edge<char, int>(0, 1, 2));
+        graph.addEdge(Edge<char, int>(1, 2, 11));
+        graph.addEdge(Edge<char, int>(2, 5, 9));
+        graph.addEdge(Edge<char, int>(5, 8, 10));
+        graph.addEdge(Edge<char, int>(7, 8, 8));
+        graph.addEdge(Edge<char, int>(6, 7, 6));
+        graph.addEdge(Edge<char, int>(3, 6, 5));
+        graph.addEdge(Edge<char, int>(0, 3, 1));
+        graph.addEdge(Edge<char, int>(3, 4, 4));
+        graph.addEdge(Edge<char, int>(1, 4, 3));
+        graph.addEdge(Edge<char, int>(4, 8, 7));
+
         cout << "已建立空图" << endl;
         do{
             input = UiCollection::choices("图计算测试",
@@ -102,6 +124,8 @@ public:
                             Graph<char, int>::recursionDFS(mst).printList();
                             cout << "最小生成树的广度优先遍历为：" << endl;
                             Graph<char, int>::recursionBFS(mst).printList();
+                            cout << "最小生成树的所有边：" << endl;
+                            mst.printAllEdges();
                         }
                         UiCollection::pauseAndClear();
                     }catch (exception &e){cout << e.what() << endl;}
@@ -119,6 +143,8 @@ public:
                             Graph<char, int>::recursionDFS(mst).printList();
                             cout << "最小生成树的广度优先遍历为：" << endl;
                             Graph<char, int>::recursionBFS(mst).printList();
+                            cout << "最小生成树的所有边：" << endl;
+                            mst.printAllEdges();
                         }
                         UiCollection::pauseAndClear();
                     }catch (exception &e){cout << e.what() << endl;}
@@ -126,7 +152,18 @@ public:
                 case 9:
                     try{
                         UiCollection::printLine();
-                        //todo::未完成
+                        cout << "请输入路径的起点的序号：";
+                        cin >> indexA;
+                        cout << "请输入路径的终点的序号：";
+                        cin >> indexB;
+                        if(indexA>=graph.numOfNode()||indexB>=graph.numOfNode()
+                        ||indexA<0||indexB<0){
+                            cout << "无效的编号" << endl;
+                            break;
+                        }
+                        cout << "从" << graph.getElem(indexA) << "到"
+                        << graph.getElem(indexB) << "的最短路径为："
+                        << graph.shortestPath(indexA).getElem(indexB) << endl;
                         UiCollection::pauseAndClear();
                     }catch (exception &e){cout << e.what() << endl;}
 

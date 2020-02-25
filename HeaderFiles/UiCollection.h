@@ -15,6 +15,7 @@ public: //以下为公有接口
         cout<<"---------------------"<<endl;
     }
 
+
     //程序暂停
     static void pause(){
         int temp;
@@ -22,6 +23,13 @@ public: //以下为公有接口
         cout << "输入任意指令返回菜单：" ;
         cin >> temp;
     }
+
+
+    static void pauseAndClear(){
+        pause();
+        clear();
+    }
+
 
     //输出选择列表，并返回用户输入的指令，处理非法指令与指令0（退出）
     static int choices(const string& title, int numOfChoices, string choiceMenu[], bool isMainMenu = false){
@@ -47,6 +55,7 @@ public: //以下为公有接口
         return 0;
     } //end define
 
+
     //清屏函数，通过换行100次来清屏
     static void clear(){
         for(int count = 0; count < 100; count++){
@@ -55,7 +64,7 @@ public: //以下为公有接口
     }
 
 
-protected: //以下私有功能模块
+private: //以下私有功能模块
     //输出选择指引信息
     static void printChoice(const string& title, int numOfChoices, string choiceInfo[], bool isMainMenu = false){
         if(title != "false")cout << title << endl;

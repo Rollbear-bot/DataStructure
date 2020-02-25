@@ -130,7 +130,8 @@ public:
 
     //析构函数
     ~List(){
-        clear_recursion(first);
+        //todo::有问题的析构函数
+        //clear_recursion(first);
     }
 
 public:
@@ -233,6 +234,7 @@ public:
 
     //所查找元素是否在链表中
     bool inList(T item) const {
+        if(isEmpty()) return false;
         return locate(item) != -1;
     }
 
@@ -268,7 +270,9 @@ public:
         for(i = 0; i < this->len-1; i++){
             k = i;
             for(j = i + 1; j < len; j++){
-                if(getElem(k) > getElem(j)) k = j;
+                if(getElem(k) > getElem(j)) {
+                    k = j;
+                }
             }
             //交换k和i的值
             temp = getElem(i);
@@ -342,6 +346,17 @@ public:
      void toArr(T *arr) const {
          for(int index = 0; index < len; index++)
              arr[index] = getElem(index);
+     }
+
+
+    //返回链表中的最大元素
+    T maxElem() const {
+         if(first == nullptr || first->next == nullptr) throw NullPointer();
+         T max = first->next->data;
+         for(ListNode<T> *i = first->next; i != last; i = i->next){
+             if(max < i->data) max = i->data;
+         }
+         return max;
      }
 
 

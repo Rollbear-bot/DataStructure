@@ -15,6 +15,7 @@
 #include "Exp8//Menu8.h"
 #include "Exp9//Menu9.h"
 #include "Exp10//Menu10.h"
+#include "Exp11/Menu11.h"
 
 //系统信息
 #define author "Wu Junhong"
@@ -52,9 +53,10 @@ public:
                              "实验七：顺序串的基本运算算法",
                              "实验八：二叉树的基本操作（建立）及遍历",
                              "实验九：线索化二叉树和树的基本操作（建立）和遍历",
-                             "实验十：搜索结构"};
+                             "实验十：搜索结构",
+                             "实验十一：图计算"};
         do{
-            cmd = UiCollection::choices("请输入要测试的章节选项：", 10, mainMenu, true);
+            cmd = UiCollection::choices("请输入要测试的章节选项：", 11, mainMenu, true);
             switch (cmd){
                 case 1:
                     Menu1::menu();
@@ -86,6 +88,10 @@ public:
                 case 10:
                     Menu10::menu();
                     break;
+                case 11:
+                    Menu11::menu();
+                    break;
+
 
                 default:
                     break;

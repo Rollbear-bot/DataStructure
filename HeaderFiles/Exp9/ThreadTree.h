@@ -102,7 +102,7 @@ protected:
         }
         if(cur->rightChild == nullptr){
             //如果当前节点是中序遍历的最后一个节点，则指针域空
-            if(inOrderList.locate(cur) == inOrderList.getLen() - 1)
+            if(inOrderList.locate(cur) == inOrderList.length() - 1)
                 cur->rightChild = nullptr;
             else {//与左指针的操作类似
                 cur->rightChild =
